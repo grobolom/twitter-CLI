@@ -1,3 +1,6 @@
+import sys
+import readchar
+
 def main():
     print('fetch data from the api')
     print('loop')
@@ -5,9 +8,10 @@ def main():
     print('   push it into a renderer to get an 80x40 printout of it')
     print('   wait for commands from the user')
 
-    while 1 == 1:
-        x = raw_input()
-        print(x)
+    key = ''
+    while key != 'x':
+        key = readchar.readkey()
+        print(key)
 
 if __name__ == "__main__":
     main()
