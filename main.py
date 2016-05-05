@@ -8,9 +8,9 @@ def main():
     print('   push it into a renderer to get an 80x40 printout of it')
     print('   wait for commands from the user')
 
-    key = ''
-    while key != 'x':
-        key = readchar.readkey()
+    key = 0
+    while key != 27:
+        key = ord(readchar.readchar())
         print(key)
 
 if __name__ == "__main__":
