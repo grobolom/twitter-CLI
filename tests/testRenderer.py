@@ -1,6 +1,6 @@
 import unittest
 
-from TwitterCLI import Renderer
+from TwitterCLI.Renderer import Renderer
 
 class TestRenderer(unittest.TestCase):
     def test(self):
