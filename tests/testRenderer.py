@@ -1,8 +1,13 @@
 import unittest
 
 from TwitterCLI.Renderer import Renderer
+from TwitterCLI.Tweet import Tweet
 
 class TestRenderer(unittest.TestCase):
-    def test(self):
-        x = Renderer()
-        x.render('bacon\n\n\nbacon')
+    def test_it_should_render_tweets(self):
+        renderer = Renderer()
+        tweet = Tweet('grobolom', 'bacon\n bacon')
+        self.assertEqual(renderer.render(tweet), [
+            "       grobolom bacon",
+            "                 bacon",
+        ])
