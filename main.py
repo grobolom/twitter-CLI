@@ -14,25 +14,45 @@ def main():
     print('   push it into a renderer to get an 80x40 printout of it')
     print('   wait for commands from the user')
 
-    key = 0
-    while key != 27:
-        key = ord(readchar.readchar())
-        print(key)
+    # key = 0
+    # while key != 27:
+        # key = ord(readchar.readchar())
+        # print(key)
 
 def fetch():
-    with open('config/twitter.json') as twitter_config:
-        config = json.load(twitter_config)
+    timeline = None
+    try:
+        with open('config/data.json') as cached_data:
+            timeline = json.load(cached_data)
+    except IOError:
+        pass
 
-    user = config['user']
-    access_key = config['access_key']
-    access_secret = config['access_secret']
-    consumer_key = config['consumer_key']
-    consumer_secret = config['consumer_secret']
+    if not timeline:
+        print('fetching')
+        with open('config/twitter.json') as twitter_config:
+            config = json.load(twitter_config)
 
-    twitter = Twitter(
-        auth = OAuth(access_key, access_secret, consumer_key, consumer_secret))
+        user = config['user']
+        access_key = config['access_key']
+        access_secret = config['access_secret']
+        consumer_key = config['consumer_key']
+        consumer_secret = config['consumer_secret']
 
-    print(twitter.statuses.user_timeline(screen_name=user))
+        twitter = Twitter(
+            auth = OAuth(
+                access_key,
+                access_secret,
+                consumer_key,
+                consumer_secret
+            )
+        )
+
+        timeline = twitter.statuses.user_timeline(screen_name=user)
+
+        with open('config/data.json', 'w') as temp_data:
+            json.dump(timeline, temp_data)
+
+    # print(timeline)
 
 if __name__ == "__main__":
     main()
