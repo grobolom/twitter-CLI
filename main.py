@@ -8,11 +8,9 @@ from TwitterCLI.Tweet import Tweet
 from TwitterCLI.Screen import Screen
 
 def main():
-    print('fetch data from the api')
-
     timeline = fetch()
-    print(shutil.get_terminal_size)
-    screen = Screen(20, 160)
+    dims = shutil.get_terminal_size()
+    screen = Screen(dims[1], dims[0])
 
     tweets = []
     for tweet in timeline:
