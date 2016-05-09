@@ -3,21 +3,16 @@ import readchar
 import json
 
 from twitter import Twitter, OAuth
+from TwitterCLI.Tweet import Tweet
 
 def main():
     print('fetch data from the api')
 
-    fetch()
+    timeline = fetch()
 
-    print('loop')
-    print('   shove data + action into reducer to get a visual representation')
-    print('   push it into a renderer to get an 80x40 printout of it')
-    print('   wait for commands from the user')
-
-    # key = 0
-    # while key != 27:
-        # key = ord(readchar.readchar())
-        # print(key)
+    for tweet in timeline:
+        t = Tweet(tweet['user']['screen_name'], tweet['text'])
+        print(t.author, t.text)
 
 def fetch():
     timeline = None
@@ -52,7 +47,7 @@ def fetch():
         with open('config/data.json', 'w') as temp_data:
             json.dump(timeline, temp_data)
 
-    # print(timeline)
+    return timeline
 
 if __name__ == "__main__":
     main()
