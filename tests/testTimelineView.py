@@ -31,3 +31,13 @@ class TestRenderer(unittest.TestCase):
         actual = view.render(tweets=tweets, cursor=0)
         self.assertEqual(2, len(actual))
 
+    def test_it_should_chop_down_long_tweets(self):
+        view = TimelineView(width=20, height=2)
+        tweets = [
+            Tweet('grob', 'fooobaar'),
+        ]
+        actual = view.render(tweets=tweets, cursor=0)
+        self.assertEqual(actual, [
+            OKGREEN + '           grob' + ENDC + ' fooo',
+            '                baar',
+        ])

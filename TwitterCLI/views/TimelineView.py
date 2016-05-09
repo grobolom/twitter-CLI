@@ -11,13 +11,22 @@ class TimelineView:
     def render(self, tweets, cursor):
         lines = []
         for tweet in tweets:
-            lines.extend(self.renderTweet(tweet))
+            lines += self.renderTweet(tweet)
 
         return lines[0:self.height]
 
     def renderTweet(self, tweet):
         author = GREEN + tweet.author.rjust(15) + END
         gutter = ' '
-        text = tweet.text.ljust(self.width - 16)
+        long_gutter = ' ' * 16
 
-        return [author + gutter + text]
+        text_width = self.width - 16;
+        text = tweet.text[0:text_width].ljust(text_width)
+        rest = tweet.text[text_width::]
+
+        first = [author + gutter + text]
+
+        split_points = range(0, len(rest), text_width)
+        more = [long_gutter + rest[i:i+text_width] for i in split_points]
+
+        return first + more
