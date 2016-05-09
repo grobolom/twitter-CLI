@@ -9,7 +9,7 @@ from twitter import Twitter, OAuth
 from TwitterCLI.Tweet import Tweet
 from TwitterCLI.Screen import Screen
 
-from blessings import Terminal
+from blessed import Terminal
 
 def main():
     timeline = fetch()
