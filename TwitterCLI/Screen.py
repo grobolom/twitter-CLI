@@ -17,5 +17,6 @@ class Screen:
             t.text = text
             _t += renderer.render(t)
 
-        for i in range(0, self.rows):
+        lines_to_print = min(self.rows, len(_t))
+        for i in range(0, lines_to_print):
             print(_t[i])
