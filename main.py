@@ -3,6 +3,7 @@ import readchar
 import json
 import shutil
 import html
+import os
 
 from twitter import Twitter, OAuth
 from TwitterCLI.Tweet import Tweet
@@ -19,6 +20,7 @@ def main():
         text = html.unescape(tweet['text'].replace('\u2026','').rstrip(' \n'))
         tweets.append(Tweet(author, text))
 
+    os.system('clear')
     screen.render(tweets)
 
 def fetch():
