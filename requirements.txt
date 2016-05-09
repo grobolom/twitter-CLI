@@ -2,3 +2,4 @@ twitter
 readchar
 nose
 rednose
+nose-watch
