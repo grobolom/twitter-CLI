@@ -2,6 +2,7 @@ import sys
 import readchar
 import json
 import shutil
+import html
 
 from twitter import Twitter, OAuth
 from TwitterCLI.Tweet import Tweet
@@ -14,7 +15,9 @@ def main():
 
     tweets = []
     for tweet in timeline:
-        tweets.append(Tweet(tweet['user']['screen_name'], tweet['text']))
+        author = tweet['user']['screen_name']
+        text = html.unescape(tweet['text'].replace('\u2026','').rstrip(' \n'))
+        tweets.append(Tweet(author, text))
 
     screen.render(tweets)
 
