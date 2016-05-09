@@ -31,6 +31,16 @@ class TestRenderer(unittest.TestCase):
         actual = view.render(tweets=tweets, cursor=0)
         self.assertEqual(2, len(actual))
 
+    def test_repeat_calls_should_print_same_lines(self):
+        view = TimelineView(width=20, height=2)
+        tweets = [
+            Tweet('grob', 'bla'),
+            Tweet('blob', 'haha')
+        ]
+        first = view.render(tweets=tweets, cursor=0)
+        second = view.render(tweets=tweets, cursor=0)
+        self.assertEqual(first, second)
+
     def test_it_should_chop_down_long_tweets(self):
         view = TimelineView(width=20, height=2)
         tweets = [
