@@ -23,11 +23,22 @@ def main():
         tweets.append(Tweet(author, text))
 
     term = Terminal()
+    key = 0
+    do = ''
     with term.fullscreen():
-        with term.location(0, 0):
-            screen.render(tweets)
-        with term.location(0, term.height - 1):
-            input('')
+        while key != 27:
+            if key == 100:
+                tweets = tweets[1::]
+                do = 'clear'
+            render(term, screen, tweets, do)
+            key = ord(readchar.readchar())
+
+def render(term, screen, tweets, do):
+    if do == 'clear':
+        print(term.clear)
+    with term.location(0, 0):
+        screen.render(tweets)
+
 
 def fetch():
     timeline = None
