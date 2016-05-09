@@ -1,6 +1,7 @@
 import sys
 import readchar
 import json
+import shutil
 
 from twitter import Twitter, OAuth
 from TwitterCLI.Tweet import Tweet
@@ -10,7 +11,8 @@ def main():
     print('fetch data from the api')
 
     timeline = fetch()
-    screen = Screen(10, 80)
+    print(shutil.get_terminal_size)
+    screen = Screen(20, 160)
 
     tweets = []
     for tweet in timeline:

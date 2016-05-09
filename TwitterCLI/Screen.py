@@ -17,5 +17,5 @@ class Screen:
             t.text = text
             _t += renderer.render(t)
 
-        for i in range(0, 10):
+        for i in range(0, self.rows):
             print(_t[i])
