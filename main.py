@@ -27,7 +27,7 @@ def main():
     do = ''
 
     with term.fullscreen():
-        while key != readchar.key.CTRL_C:
+        while key != '\x03':
             if key == 'd':
                 tweets = tweets[1::]
                 do = 'clear'
