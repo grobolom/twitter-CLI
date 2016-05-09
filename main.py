@@ -4,15 +4,19 @@ import json
 
 from twitter import Twitter, OAuth
 from TwitterCLI.Tweet import Tweet
+from TwitterCLI.Screen import Screen
 
 def main():
     print('fetch data from the api')
 
     timeline = fetch()
+    screen = Screen(10, 80)
 
+    tweets = []
     for tweet in timeline:
-        t = Tweet(tweet['user']['screen_name'], tweet['text'])
-        print(t.author, t.text)
+        tweets.append(Tweet(tweet['user']['screen_name'], tweet['text']))
+
+    screen.render(tweets)
 
 def fetch():
     timeline = None
