@@ -51,3 +51,14 @@ class TestRenderer(unittest.TestCase):
             OKGREEN + '           grob' + ENDC + ' fooo',
             '                baar',
         ])
+
+    def test_it_should_display_tweets_at_the_cursor_position(self):
+        view = TimelineView(width=20, height=1)
+        tweets = [
+            Tweet('grob', 'bla'),
+            Tweet('blob', 'haha')
+        ]
+        actual = view.render(tweets=tweets, cursor=1)
+        self.assertEqual(actual, [
+            OKGREEN + '           blob' + ENDC + ' haha',
+        ])
