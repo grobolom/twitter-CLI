@@ -8,6 +8,6 @@ class TestRenderer(unittest.TestCase):
         renderer = Renderer()
         tweet = Tweet('grobolom', 'bacon\n bacon')
         self.assertEqual(renderer.render(tweet), [
-            "       grobolom bacon",
+            "\033[92m       grobolom \033[0mbacon",
             "                 bacon",
         ])
