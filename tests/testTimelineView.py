@@ -72,3 +72,14 @@ class TestRenderer(unittest.TestCase):
         zero = view.render(tweets, 0)
         negative = view.render(tweets, -1)
         self.assertEqual(zero, negative)
+
+    def test_it_should_print_empty_lines_after_any_tweets(self):
+        view = TimelineView(width=20, height=2)
+        tweets = [
+            Tweet('grob', 'bla'),
+        ]
+        actual = view.render(tweets=tweets, cursor=0)
+        self.assertEqual(actual, [
+            OKGREEN + '           grob' + ENDC + ' bla ',
+            '                    ',
+        ])

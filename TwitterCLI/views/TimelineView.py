@@ -17,7 +17,13 @@ class TimelineView:
         if _cursor < 0:
             _cursor = 0
 
-        return lines[_cursor:self.height + _cursor]
+        tweet_lines = lines[_cursor:self.height + _cursor]
+
+        difference = self.height - len(tweet_lines)
+        if difference > 0:
+            tweet_lines += [' ' * self.width for i in range(0, difference)]
+
+        return tweet_lines
 
     def renderTweet(self, tweet):
         author = GREEN + tweet.author.rjust(15) + END
