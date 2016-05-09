@@ -13,7 +13,11 @@ class TimelineView:
         for tweet in tweets:
             lines += self.renderTweet(tweet)
 
-        return lines[cursor:self.height + cursor]
+        _cursor = cursor
+        if _cursor < 0:
+            _cursor = 0
+
+        return lines[_cursor:self.height + _cursor]
 
     def renderTweet(self, tweet):
         author = GREEN + tweet.author.rjust(15) + END

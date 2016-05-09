@@ -62,3 +62,13 @@ class TestRenderer(unittest.TestCase):
         self.assertEqual(actual, [
             OKGREEN + '           blob' + ENDC + ' haha',
         ])
+
+    def test_it_should_treat_negative_cursor_positions_as_zero(self):
+        view = TimelineView(width=20, height=1)
+        tweets = [
+            Tweet('grob', 'bla'),
+            Tweet('blob', 'haha')
+        ]
+        zero = view.render(tweets, 0)
+        negative = view.render(tweets, -1)
+        self.assertEqual(zero, negative)
