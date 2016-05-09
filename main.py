@@ -24,8 +24,10 @@ def main():
 
     term = Terminal()
     with term.fullscreen():
-        screen.render(tweets)
-        input('')
+        with term.location(0, 0):
+            screen.render(tweets)
+        with term.location(0, term.height - 1):
+            input('')
 
 def fetch():
     timeline = None
