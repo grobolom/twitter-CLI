@@ -9,6 +9,8 @@ from twitter import Twitter, OAuth
 from TwitterCLI.Tweet import Tweet
 from TwitterCLI.Screen import Screen
 
+from blessings import Terminal
+
 def main():
     timeline = fetch()
     dims = shutil.get_terminal_size()
@@ -20,8 +22,10 @@ def main():
         text = html.unescape(tweet['text'].replace('\u2026','').rstrip(' \n'))
         tweets.append(Tweet(author, text))
 
-    os.system('clear')
-    screen.render(tweets)
+    term = Terminal()
+    with term.fullscreen():
+        screen.render(tweets)
+        input('')
 
 def fetch():
     timeline = None
