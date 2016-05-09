@@ -25,13 +25,14 @@ def main():
     term = Terminal()
     key = 0
     do = ''
+
     with term.fullscreen():
-        while key != 27:
-            if key == 100:
+        while key != readchar.key.CTRL_C:
+            if key == 'd':
                 tweets = tweets[1::]
                 do = 'clear'
             render(term, screen, tweets, do)
-            key = ord(readchar.readchar())
+            key = readchar.readkey()
 
 def render(term, screen, tweets, do):
     if do == 'clear':
