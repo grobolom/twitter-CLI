@@ -5,7 +5,7 @@ import html
 import os
 
 from TwitterCLI.Tweet import Tweet
-from TwitterCLI.Screen import Screen
+from TwitterCLI.views.TimelineView import TimelineView
 from TwitterCLI.fetch_tweets import fetch_tweets
 
 from blessed import Terminal
@@ -13,7 +13,7 @@ from blessed import Terminal
 def main():
     timeline = fetch_tweets()
     dims = shutil.get_terminal_size()
-    screen = Screen(dims[1], dims[0])
+    tl = TimelineView(80, 5)
 
     tweets = []
     for tweet in timeline:
@@ -30,14 +30,16 @@ def main():
             if key == 'd':
                 tweets = tweets[1::]
                 do = 'clear'
-            render(term, screen, tweets, do)
+            render(term, tweets, do, tl)
             key = readchar.readkey()
 
-def render(term, screen, tweets, do):
+def render(term, tweets, do, timeline):
     if do == 'clear':
         print(term.clear)
     with term.location(0, 0):
-        screen.render(tweets)
+        lines = timeline.render(tweets, 0)
+        for t in lines:
+            print(t)
 
 if __name__ == "__main__":
     main()
