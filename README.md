@@ -25,3 +25,9 @@ Our primary components are currently (going to be):
 Some specific screens are
     1. tweet list
     2. status bar
+
+## Design Decisions
+
+We are caching things in files for now because it's simple and we don't want to
+introduce additional dependencies like redis. If we need something more complex
+we will switch ASAP
