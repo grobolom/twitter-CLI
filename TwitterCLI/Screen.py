@@ -12,7 +12,7 @@ class Screen:
             moves the terminal to each spot and prints the lines to that
             portion of the screen
         """
-        os.system('cls')
+        os.system('clear')
         term.move(0, 0)
         for view in rendered_views:
             x = view[0]
