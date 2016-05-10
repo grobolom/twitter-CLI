@@ -10,6 +10,7 @@ OKGREEN = TermAnsiColors.OKGREEN
 BLUE    = TermAnsiColors.LINK
 ENDC    = TermAnsiColors.ENDC
 MENTION = TermAnsiColors.MENTION
+HASHTAG = TermAnsiColors.HASHTAG
 
 class TestTimelineView(unittest.TestCase):
     def test_it_should_render_tweets(self):
@@ -120,4 +121,15 @@ class TestTimelineView(unittest.TestCase):
         self.assertEqual(actual, [
             OKGREEN + '           grob' \
                     + ENDC + ' foo ' + MENTION + '@groblem' + ENDC,
+        ])
+
+    def test_it_should_color_hashtags(self):
+        view = TimelineView()
+        tweets = [
+            Tweet('grob', 'foo #groblem'),
+        ]
+        actual = view.render(tweets, 0, 16 + 12, 1)
+        self.assertEqual(actual, [
+            OKGREEN + '           grob' \
+                    + ENDC + ' foo ' + HASHTAG + '#groblem' + ENDC,
         ])

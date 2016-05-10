@@ -7,6 +7,7 @@ GREEN   = TermAnsiColors.OKGREEN
 END     = TermAnsiColors.ENDC
 BLUE    = TermAnsiColors.LINK
 MENTION = TermAnsiColors.MENTION
+HASHTAG = TermAnsiColors.HASHTAG
 
 class TimelineView:
     def render(self, tweets, cursor, width, height):
@@ -45,4 +46,5 @@ class TimelineView:
         t = text.ljust(width)
         t = re.sub(r'(https?://[^\s]+)+', BLUE + '\\1' + END, t)
         t = re.sub(r'(@[\w]+)+', MENTION + '\\1' + END, t)
+        t = re.sub(r'(#[\w]+)+', HASHTAG + '\\1' + END, t)
         return t
