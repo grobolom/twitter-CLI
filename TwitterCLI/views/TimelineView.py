@@ -4,33 +4,29 @@ GREEN = TermAnsiColors.OKGREEN
 END = TermAnsiColors.ENDC
 
 class TimelineView:
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-
-    def render(self, tweets, cursor):
+    def render(self, tweets, cursor, width, height):
         lines = []
         for tweet in tweets:
-            lines += self.renderTweet(tweet)
+            lines += self._renderTweet(tweet, width)
 
         _cursor = cursor
         if _cursor < 0:
             _cursor = 0
 
-        tweet_lines = lines[_cursor:self.height + _cursor]
+        tweet_lines = lines[_cursor:height + _cursor]
 
-        difference = self.height - len(tweet_lines)
+        difference = height - len(tweet_lines)
         if difference > 0:
-            tweet_lines += [' ' * self.width for i in range(0, difference)]
+            tweet_lines += [' ' * width for i in range(0, difference)]
 
         return tweet_lines
 
-    def renderTweet(self, tweet):
+    def _renderTweet(self, tweet, width):
         author = GREEN + tweet.author.rjust(15) + END
         gutter = ' '
         long_gutter = ' ' * 16
 
-        text_width = self.width - 16;
+        text_width = width - 16;
         text = tweet.text[0:text_width].ljust(text_width)
         rest = tweet.text[text_width::]
 
