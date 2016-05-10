@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from TwitterCLI.Screen import Screen
 from TwitterCLI.views.TimelineView import TimelineView
@@ -18,7 +19,7 @@ class TwitterClient:
 
         self.timelineView = TimelineView()
 
-    def run(self, dims):
+    def run(self):
         state = self._initialState()
         with self.terminal.fullscreen():
             with self.terminal.cbreak():
@@ -26,6 +27,7 @@ class TwitterClient:
                 while key != '\x03':
                     if key == 'x':
                         os.system('clear')
+                    dims = shutil.get_terminal_size()
                     action = self._actions(key)
                     state = self.reducer.reduce(state, action)
                     self.render(dims, state)
