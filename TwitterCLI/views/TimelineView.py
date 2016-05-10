@@ -4,8 +4,8 @@ import re
 from TwitterCLI.Renderer import TermAnsiColors
 
 GREEN = TermAnsiColors.OKGREEN
-END = TermAnsiColors.ENDC
-BLUE = TermAnsiColors.LINKBLUE
+END   = TermAnsiColors.ENDC
+BLUE  = TermAnsiColors.LINKBLUE
 
 class TimelineView:
     def render(self, tweets, cursor, width, height):
