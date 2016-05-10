@@ -1,4 +1,5 @@
 import unittest
+
 from TwitterCLI.views.TimelineView import TimelineView
 from TwitterCLI.Tweet import Tweet
 
@@ -6,9 +7,9 @@ from TwitterCLI.Tweet import Tweet
 from TwitterCLI.Renderer import TermAnsiColors
 
 OKGREEN = TermAnsiColors.OKGREEN
-ENDC = TermAnsiColors.ENDC
+ENDC    = TermAnsiColors.ENDC
 
-class TestRenderer(unittest.TestCase):
+class TestTimelineView(unittest.TestCase):
     def test_it_should_render_tweets(self):
         view = TimelineView()
         tweets = [
@@ -49,7 +50,7 @@ class TestRenderer(unittest.TestCase):
         actual = view.render(tweets=tweets, cursor=0, width=20, height=2)
         self.assertEqual(actual, [
             OKGREEN + '           grob' + ENDC + ' fooo',
-            '                baar',
+                      '               ' +        ' baar',
         ])
 
     def test_it_should_display_tweets_at_the_cursor_position(self):
@@ -81,7 +82,7 @@ class TestRenderer(unittest.TestCase):
         actual = view.render(tweets=tweets, cursor=0, width=20, height=2)
         self.assertEqual(actual, [
             OKGREEN + '           grob' + ENDC + ' bla ',
-            '                    ',
+                      '               ' +        '     ',
         ])
 
     def test_it_should_right_pad_all_tweets(self):
@@ -92,7 +93,7 @@ class TestRenderer(unittest.TestCase):
         actual = view.render(tweets=tweets, cursor=0, width=20, height=4)
         self.assertEqual(actual, [
             OKGREEN + '           grob' + ENDC + ' fooo',
-            '                baar',
-            '                no  ',
-            '                    ',
+                      '               ' +        ' baar',
+                      '               ' +        ' no  ',
+                      '               ' +        '     ',
         ])
