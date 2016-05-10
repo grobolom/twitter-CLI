@@ -56,17 +56,17 @@ class TwitterClient:
         self.terminal.move(0, 0)
         self.screen.render(self.terminal, [
             (0, 0, self.timelineView.render(
-                state['tweets'], state['cursor'], 70, dims[1] - 1
+                state['tweets'], state['cursor'], 156, dims[1] - 1
             )),
-            (dims[0] - 19, 0, [ '|' + e.ljust(19) for e in [
+            (dims[0] - 19, 0, [ ' ' + e.ljust(19) for e in [
                 'TwitterCLI',
                 '@grobolom',
                 'Friends',
-                str(len(state['tweets'])),
-                str(state['cursor']),
-                str(state['cursor_max']),
-                str(dims[0]),
-                str(dims[1]),
-            ]] + ['-' * 19])
+                'tweets: ' + str(len(state['tweets'])),
+                'index : ' + str(state['cursor']),
+                'max   : ' + str(state['cursor_max']),
+                'x     : ' + str(dims[0]),
+                'y     : ' + str(dims[1]),
+            ]] + [' ' * 19])
         ])
         self.terminal.move(0, 0)
