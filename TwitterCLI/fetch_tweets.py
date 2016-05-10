@@ -1,5 +1,6 @@
 import json
 from twitter import Twitter, OAuth
+from TwitterCLI.TweetBuilder import TweetBuilder
 
 def fetch_tweets():
     timeline = None
@@ -39,4 +40,5 @@ def fetch_tweets():
         with open('config/data.json', 'w') as temp_data:
             json.dump(timeline, temp_data)
 
-    return timeline
+    tb = TweetBuilder()
+    return tb.buildTweets(timeline)
