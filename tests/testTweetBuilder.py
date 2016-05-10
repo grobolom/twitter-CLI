@@ -20,4 +20,8 @@ class TestTweetBuilder(unittest.TestCase):
 
         self.assertEqual(expected.author, actual.author)
         self.assertEqual(expected.text, actual.text)
-        pass
+
+    def test_throws_exception_on_invalid_json(self):
+        builder = TweetBuilder()
+        with self.assertRaisesRegexp(TypeError, 'invalid json'):
+            builder.buildTweet('bogus')
