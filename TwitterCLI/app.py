@@ -20,7 +20,9 @@ class TwitterClient:
         self.timelineView = TimelineView()
 
     def run(self):
+        old_state = {}
         state = self._initialState()
+
         with self.terminal.fullscreen():
             with self.terminal.cbreak():
                 key = ''
@@ -29,8 +31,14 @@ class TwitterClient:
                         os.system('clear')
                     dims = shutil.get_terminal_size()
                     action = self._actions(key)
+
                     state = self.reducer.reduce(state, action)
-                    self.render(dims, state)
+
+                    if state != old_state:
+                        self.render(dims, state)
+
+                    old_state = dict.copy(state)
+
                     key = self.terminal.inkey(timeout = 5)
 
     def _initialState(self):
