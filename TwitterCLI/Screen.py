@@ -22,6 +22,6 @@ class Screen:
             i = 0
             for line in lines_to_print:
                 with term.location(x, y + i):
-                    print('|' + line)
+                    print('|' + line + '|')
                 i += 1
         term.move(0, 0)
