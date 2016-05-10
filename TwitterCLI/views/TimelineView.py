@@ -36,7 +36,10 @@ class TimelineView:
 
         first = [author + gutter + text]
 
+        more = []
         split_points = range(0, len(rest), text_width)
-        more = [long_gutter + rest[i:i+text_width] for i in split_points]
+        for i in split_points:
+            line = long_gutter + rest[i:i + text_width].ljust(text_width)
+            more += [ line ]
 
         return first + more

@@ -83,3 +83,16 @@ class TestRenderer(unittest.TestCase):
             OKGREEN + '           grob' + ENDC + ' bla ',
             '                    ',
         ])
+
+    def test_it_should_right_pad_all_tweets(self):
+        view = TimelineView(width=20, height=4)
+        tweets = [
+            Tweet('grob', 'fooobaarno'),
+        ]
+        actual = view.render(tweets=tweets, cursor=0)
+        self.assertEqual(actual, [
+            OKGREEN + '           grob' + ENDC + ' fooo',
+            '                baar',
+            '                no  ',
+            '                    ',
+        ])
