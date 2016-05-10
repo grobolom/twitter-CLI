@@ -1,9 +1,11 @@
 import textwrap
+import re
 
 from TwitterCLI.Renderer import TermAnsiColors
 
 GREEN = TermAnsiColors.OKGREEN
 END = TermAnsiColors.ENDC
+BLUE = TermAnsiColors.LINKBLUE
 
 class TimelineView:
     def render(self, tweets, cursor, width, height):
@@ -25,15 +27,20 @@ class TimelineView:
 
     def _renderTweet(self, tweet, width):
         author = GREEN + tweet.author.rjust(15) + END
-        gutter = ' '
-        long_gutter = ' ' * 16
-        text_width = width - 16;
+        gutter = ' ' * 16
 
-        text = textwrap.wrap(tweet.text, text_width, break_on_hyphens=False)
+        t = tweet.text
+        w = width - 16;
 
-        first_text = text[0].ljust(text_width)
+        text = textwrap.wrap(t, w, break_on_hyphens=False)
+        first_text = self._formatText(text[0], w)
 
-        first = [ author + gutter + first_text ]
-        rest = [ long_gutter + line.ljust(text_width) for line in text[1:] ]
+        first = [ author + ' ' + first_text ]
+        rest = [ gutter + self._formatText(line, w) for line in text[1:] ]
 
         return first + rest
+
+    def _formatText(self, text, width):
+        j = text.ljust(width)
+        colored = re.sub(r'(https?://[^\s]+)+', BLUE + '\\1' + END, j)
+        return colored
