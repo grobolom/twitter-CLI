@@ -29,7 +29,12 @@ def fetch_tweets():
             )
         )
 
-        timeline = twitter.statuses.user_timeline(screen_name=user)
+        timeline = twitter.lists.statuses(
+            slug='friends',
+            owner_screen_name=user,
+            include_rts=False,
+            count=200
+        )
 
         with open('config/data.json', 'w') as temp_data:
             json.dump(timeline, temp_data)
