@@ -1,6 +1,9 @@
 twitter
 readchar
-nose
-rednose
-nose-watch
 blessed
+
+# testing stuff
+nose
+nose-watch
+rednose
+coverage
