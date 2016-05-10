@@ -56,7 +56,7 @@ class TwitterClient:
         self.terminal.move(0, 0)
         self.screen.render(self.terminal, [
             (0, 0, self.timelineView.render(
-                state['tweets'], state['cursor'], min(dims[0], 156), dims[1] - 1
+                state['tweets'], state['cursor'], 70, dims[1] - 1
             )),
             (dims[0] - 19, 0, [ '|' + e.ljust(19) for e in [
                 'TwitterCLI',
