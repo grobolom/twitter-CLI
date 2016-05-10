@@ -25,3 +25,19 @@ class TestTweetBuilder(unittest.TestCase):
         builder = TweetBuilder()
         with self.assertRaisesRegexp(TypeError, 'invalid json'):
             builder.buildTweet('bogus')
+
+    def test_builds_multiple_tweets_from_list(self):
+        tweet_list = [
+            {
+                'user': { 'screen_name': 'cow' },
+                'text': 'moo',
+            }, {
+                'user': { 'screen_name': 'human' },
+                'text': 'wha\xfft?',
+            },
+        ]
+        builder = TweetBuilder()
+        actual = builder.buildTweets(tweet_list)
+
+        self.assertEqual('cow', actual[0].author)
+        self.assertEqual('wha.t?', actual[1].text)
