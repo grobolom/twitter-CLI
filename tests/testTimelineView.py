@@ -7,6 +7,7 @@ from TwitterCLI.Tweet import Tweet
 from TwitterCLI.Renderer import TermAnsiColors
 
 OKGREEN = TermAnsiColors.OKGREEN
+BLUE    = TermAnsiColors.LINKBLUE
 ENDC    = TermAnsiColors.ENDC
 
 class TestTimelineView(unittest.TestCase):
@@ -96,4 +97,15 @@ class TestTimelineView(unittest.TestCase):
                       '               ' +        ' baar',
                       '               ' +        ' no  ',
                       '               ' +        '     ',
+        ])
+
+    def test_it_should_color_links_blue(self):
+        view = TimelineView()
+        tweets = [
+            Tweet('grob', 'foo http://something.xom'),
+        ]
+        actual = view.render(tweets, 0, 16 + 24, 1)
+        self.assertEqual(actual, [
+            OKGREEN + '           grob' \
+                    + ENDC + ' foo ' + BLUE + 'http://something.xom' + ENDC,
         ])
