@@ -7,8 +7,9 @@ from TwitterCLI.Tweet import Tweet
 from TwitterCLI.Renderer import TermAnsiColors
 
 OKGREEN = TermAnsiColors.OKGREEN
-BLUE    = TermAnsiColors.LINKBLUE
+BLUE    = TermAnsiColors.LINK
 ENDC    = TermAnsiColors.ENDC
+MENTION = TermAnsiColors.MENTION
 
 class TestTimelineView(unittest.TestCase):
     def test_it_should_render_tweets(self):
@@ -108,4 +109,15 @@ class TestTimelineView(unittest.TestCase):
         self.assertEqual(actual, [
             OKGREEN + '           grob' \
                     + ENDC + ' foo ' + BLUE + 'http://something.xom' + ENDC,
+        ])
+
+    def test_it_should_color_mentions_yellow(self):
+        view = TimelineView()
+        tweets = [
+            Tweet('grob', 'foo @groblem'),
+        ]
+        actual = view.render(tweets, 0, 16 + 12, 1)
+        self.assertEqual(actual, [
+            OKGREEN + '           grob' \
+                    + ENDC + ' foo ' + MENTION + '@groblem' + ENDC,
         ])

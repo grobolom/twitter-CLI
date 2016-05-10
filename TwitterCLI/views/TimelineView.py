@@ -3,9 +3,10 @@ import re
 
 from TwitterCLI.Renderer import TermAnsiColors
 
-GREEN = TermAnsiColors.OKGREEN
-END   = TermAnsiColors.ENDC
-BLUE  = TermAnsiColors.LINKBLUE
+GREEN   = TermAnsiColors.OKGREEN
+END     = TermAnsiColors.ENDC
+BLUE    = TermAnsiColors.LINK
+MENTION = TermAnsiColors.MENTION
 
 class TimelineView:
     def render(self, tweets, cursor, width, height):
@@ -41,6 +42,7 @@ class TimelineView:
         return first + rest
 
     def _formatText(self, text, width):
-        j = text.ljust(width)
-        colored = re.sub(r'(https?://[^\s]+)+', BLUE + '\\1' + END, j)
-        return colored
+        t = text.ljust(width)
+        t = re.sub(r'(https?://[^\s]+)+', BLUE + '\\1' + END, t)
+        t = re.sub(r'(@[\w]+)+', MENTION + '\\1' + END, t)
+        return t
