@@ -1,3 +1,5 @@
+import textwrap
+
 from TwitterCLI.Renderer import TermAnsiColors
 
 GREEN = TermAnsiColors.OKGREEN
@@ -25,17 +27,13 @@ class TimelineView:
         author = GREEN + tweet.author.rjust(15) + END
         gutter = ' '
         long_gutter = ' ' * 16
-
         text_width = width - 16;
-        text = tweet.text[0:text_width].ljust(text_width)
-        rest = tweet.text[text_width::]
 
-        first = [author + gutter + text]
+        text = textwrap.wrap(tweet.text, text_width, break_on_hyphens=False)
 
-        more = []
-        split_points = range(0, len(rest), text_width)
-        for i in split_points:
-            line = long_gutter + rest[i:i + text_width].ljust(text_width)
-            more += [ line ]
+        first_text = text[0].ljust(text_width)
 
-        return first + more
+        first = [ author + gutter + first_text ]
+        rest = [ long_gutter + line.ljust(text_width) for line in text[1:] ]
+
+        return first + rest
