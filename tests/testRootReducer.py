@@ -53,3 +53,17 @@ class TestRootReducer(unittest.TestCase):
         }
         state = self.rootReducer.reduce(state, action)
         self.assertEqual(state['cursor'], 0)
+
+    def test_it_should_switch_lists_on_tab(self):
+        state = {
+            'selected_list': 'tweets',
+            'available_lists': [
+                'tweets',
+                'list.next',
+            ]
+        }
+        action = {
+            'name' : 'SWITCH_TAB',
+        }
+        state = self.rootReducer.reduce(state, action)
+        self.assertEqual(state['selected_list'], 'list.next')

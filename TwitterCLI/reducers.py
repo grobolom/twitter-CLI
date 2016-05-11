@@ -1,10 +1,15 @@
 class RootReducer:
     def reduce(self, state, action):
-        if action['name']:
-            state['last_action'] = action['name']
+        name = action['name']
+        if name:
+            state['last_action'] = name
 
-        if action['name'] == 'CURSOR_MOVE':
+        if name == 'CURSOR_MOVE':
             return self._cursorMove(state, action)
+        elif name == 'SWITCH_TAB':
+            return self._switchTab(state, action)
+
+
         return state
 
     def _cursorMove(self, state, action):
@@ -19,5 +24,24 @@ class RootReducer:
         cursor = state['cursor'] + amount
         cursor_max = state['cursor_max']
         state['cursor'] = sorted([0, cursor, cursor_max])[1]
+
+        return state
+
+    def _switchTab(self, state, action):
+        """
+        we also use a fancy method here to find the next tab to switch to
+        since we don't want to run off the end, so we stick the zero
+        index onto the end and use that to roll back to the start if we
+        need to
+        """
+        current = state['selected_list']
+        lists   = state['available_lists']
+
+        if current in lists:
+            index      = lists.index(current)
+            indices    = list(range(0, len(lists))) + [ 0 ]
+            next_index = indices[ index ] + 1
+
+            state['selected_list'] = lists[next_index]
 
         return state
