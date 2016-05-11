@@ -4,15 +4,3 @@ class TermAnsiColors:
     LINK = '\033[94m'
     MENTION = '\033[33m'
     HASHTAG = '\033[95m'
-
-class Renderer:
-    def render(self, tweet):
-        lines = tweet.text.split("\n")
-
-        author_part = TermAnsiColors.OKGREEN + \
-            tweet.author.rjust(15) + \
-            " " + \
-            TermAnsiColors.ENDC
-        first_line = [ author_part + lines[0] ]
-        rest = [ " " * 16 + line for line in lines[1::]]
-        return first_line + rest
