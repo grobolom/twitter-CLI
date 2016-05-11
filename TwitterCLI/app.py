@@ -2,7 +2,10 @@ import os
 import shutil
 
 from TwitterCLI.Screen import Screen
+
 from TwitterCLI.views.TimelineView import TimelineView
+from TwitterCLI.views.TweetTabView import TweetTabView
+
 from TwitterCLI.fetch_tweets import fetch_tweets
 from TwitterCLI.TweetBuilder import TweetBuilder
 from TwitterCLI.reducers import RootReducer
@@ -18,6 +21,7 @@ class TwitterClient:
         self.state    = self._initialState()
 
         self.timelineView = TimelineView()
+        self.tweetTabView = TweetTabView()
 
     def run(self):
         old_state = {}
@@ -44,8 +48,9 @@ class TwitterClient:
     def _initialState(self):
         return {
             'cursor': 0,
-            'cursor_max': '200',
+            'cursor_max': 200,
             'tweets': self._getTweets(),
+            'username': 'grobolom'
         }
 
     def _getTweets(self):
@@ -53,12 +58,14 @@ class TwitterClient:
 
     def _actions(self, key):
         key_to_action_map = {
-            'k': 'CURSOR_UP',
-            'j': 'CURSOR_DOWN',
+            'k': { 'name': 'CURSOR_MOVE', 'amount' : -1 },
+            'j': { 'name': 'CURSOR_MOVE', 'amount' : 1 },
+            'u': { 'name': 'CURSOR_MOVE', 'amount' : -10 },
+            'd': { 'name': 'CURSOR_MOVE', 'amount' : 10 },
         }
         if key in key_to_action_map:
             return key_to_action_map[ key ]
-        return None
+        return { 'name': 'None' }
 
     def render(self, dims, state):
         self.terminal.move(0, 0)
@@ -66,15 +73,6 @@ class TwitterClient:
             (0, 0, self.timelineView.render(
                 state['tweets'], state['cursor'], 86, dims[1] - 1
             )),
-            (dims[0] - 19, 0, [ ' ' + e.ljust(19) for e in [
-                'TwitterCLI',
-                '@grobolom',
-                'Friends',
-                'tweets: ' + str(len(state['tweets'])),
-                'index : ' + str(state['cursor']),
-                'max   : ' + str(state['cursor_max']),
-                'x     : ' + str(dims[0]),
-                'y     : ' + str(dims[1]),
-            ]] + [' ' * 19])
+            (dims[0] - 20, 0, self.tweetTabView.render(state)),
         ])
         self.terminal.move(0, 0)
