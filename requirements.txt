@@ -4,3 +4,4 @@ blessed
 
 # testing stuff
 nose
+coverage
