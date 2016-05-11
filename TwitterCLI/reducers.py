@@ -1,5 +1,8 @@
 class RootReducer:
     def reduce(self, state, action):
+        if action['name']:
+            state['last_action'] = action['name']
+
         if action['name'] == 'CURSOR_MOVE':
             return self._cursorMove(state, action)
         return state
