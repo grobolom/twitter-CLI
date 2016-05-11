@@ -50,7 +50,12 @@ class TwitterClient:
             'cursor': 0,
             'cursor_max': 200,
             'tweets': self._getTweets(),
-            'username': 'grobolom'
+            'username': 'grobolom',
+            'available_lists': [
+                'tweets',
+                'home_timeline',
+                'lists.friends',
+            ]
         }
 
     def _getTweets(self):
