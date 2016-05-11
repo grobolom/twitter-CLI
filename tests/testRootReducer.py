@@ -11,7 +11,11 @@ class TestRootReducer(unittest.TestCase):
             'cursor' : 0,
             'cursor_max' : 20,
         }
-        state = self.rootReducer.reduce(state, 'CURSOR_DOWN')
+        action = {
+            'name' : 'CURSOR_MOVE',
+            'amount' : 1,
+        }
+        state = self.rootReducer.reduce(state, action)
         self.assertEqual(state['cursor'], 1)
 
     def test_stops_cursor_scrolling_past_end_of_page(self):
@@ -19,7 +23,11 @@ class TestRootReducer(unittest.TestCase):
             'cursor' : 20,
             'cursor_max' : 20,
         }
-        state = self.rootReducer.reduce(state, 'CURSOR_DOWN')
+        action = {
+            'name' : 'CURSOR_MOVE',
+            'amount' : 1,
+        }
+        state = self.rootReducer.reduce(state, action)
         self.assertEqual(state['cursor'], 20)
 
     def test_scrolls_cursor_up(self):
@@ -27,7 +35,11 @@ class TestRootReducer(unittest.TestCase):
             'cursor' : 10,
             'cursor_max' : 20,
         }
-        state = self.rootReducer.reduce(state, 'CURSOR_UP')
+        action = {
+            'name' : 'CURSOR_MOVE',
+            'amount' : -1,
+        }
+        state = self.rootReducer.reduce(state, action)
         self.assertEqual(state['cursor'], 9)
 
     def test_stops_cursor_scrolling_above_top_of_page(self):
@@ -35,5 +47,9 @@ class TestRootReducer(unittest.TestCase):
             'cursor' : 0,
             'cursor_max' : 20,
         }
-        state = self.rootReducer.reduce(state, 'CURSOR_UP')
+        action = {
+            'name' : 'CURSOR_MOVE',
+            'amount' : -1,
+        }
+        state = self.rootReducer.reduce(state, action)
         self.assertEqual(state['cursor'], 0)
