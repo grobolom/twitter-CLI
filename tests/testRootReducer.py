@@ -81,3 +81,17 @@ class TestRootReducer(unittest.TestCase):
         }
         state = self.rootReducer.reduce(state, action)
         self.assertEqual(state['selected_list'], 'tweets')
+
+    def test_it_should_select_the_first_tab_if_invalid_tab_selected(self):
+        state = {
+            'selected_list': 'notreal',
+            'available_lists': [
+                'tweets',
+            ]
+        }
+        action = {
+            'name' : 'SWITCH_TAB',
+        }
+        state = self.rootReducer.reduce(state, action)
+        self.assertEqual(state['selected_list'], 'tweets')
+

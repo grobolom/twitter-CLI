@@ -44,5 +44,7 @@ class RootReducer:
             next_index = indices[ index + 1 ]
 
             state['selected_list'] = lists[next_index]
+        else:
+            state['selected_list'] = lists[0]
 
         return state
