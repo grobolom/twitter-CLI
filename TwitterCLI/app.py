@@ -2,7 +2,6 @@ import os
 import shutil
 
 from TwitterCLI.Screen import Screen
-
 from TwitterCLI.views.TimelineView import TimelineView
 from TwitterCLI.views.TweetTabView import TweetTabView
 
@@ -33,29 +32,33 @@ class TwitterClient:
         old_state = {}
         state = self._initialState()
 
-        with self.terminal.fullscreen():
-            with self.terminal.cbreak():
-                key = ''
-                while key != '\x03':
+        try:
+            with self.terminal.fullscreen():
+                with self.terminal.cbreak():
+                    key = ''
+                    while key != '\x03':
 
-                    # TODO: move this somewhere where it makes sense
-                    dims = shutil.get_terminal_size()
+                        # TODO: move this somewhere where it makes sense
+                        dims = shutil.get_terminal_size()
 
-                    state['screen_width']  = dims[0]
-                    state['screen_height'] = dims[1]
+                        state['screen_width']  = dims[0]
+                        state['screen_height'] = dims[1]
 
-                    action = self._actions(key)
+                        action = self._actions(key)
 
-                    state = self.reducer.reduce(state, action)
+                        state = self.reducer.reduce(state, action)
 
-                    if state != old_state:
-                        self.render(state)
+                        if state != old_state:
+                            self.render(state)
 
-                    old_state = dict.copy(state)
+                        old_state = dict.copy(state)
 
-                    key = self.terminal.inkey(timeout = 5)
-                    if key.is_sequence:
-                        key = key.name
+                        key = self.terminal.inkey(timeout = 5)
+                        if key.is_sequence:
+                            key = key.name
+        except KeyboardInterrupt:
+            print('seeya!')
+            return
 
     def _initialState(self):
         return {
