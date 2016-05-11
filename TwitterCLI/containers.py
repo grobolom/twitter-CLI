@@ -19,4 +19,7 @@ class TweetWindow():
         else:
             tweets = []
 
+        # TODO: move this decision making to somewhere up top. We need
+        # a good way to decide what size screens should be without
+        # hard coding it here in containers
         return self.view.render(tweets, cursor, _w - 20, _h - 1)
