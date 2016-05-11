@@ -1,5 +1,7 @@
 # TwitterCLI
 
+[![codecov](https://codecov.io/gh/grobolom/TwitterCLI/branch/master/graph/badge.svg)](https://codecov.io/gh/grobolom/TwitterCLI)
+
 an attempt to replicate Gary Bernhardt's functional twitter client in python
 from memory
 
