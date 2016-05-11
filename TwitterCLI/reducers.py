@@ -41,7 +41,7 @@ class RootReducer:
         if current in lists:
             index      = lists.index(current)
             indices    = list(range(0, len(lists))) + [ 0 ]
-            next_index = indices[ index ] + 1
+            next_index = indices[ index + 1 ]
 
             state['selected_list'] = lists[next_index]
 
