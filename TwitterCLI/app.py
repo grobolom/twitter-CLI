@@ -9,6 +9,7 @@ from TwitterCLI.views.TweetTabView import TweetTabView
 from TwitterCLI.fetch_tweets import fetch_tweets
 from TwitterCLI.TweetBuilder import TweetBuilder
 from TwitterCLI.reducers import RootReducer
+from TwitterCLI.actions import KeyboardEventHandler
 
 from blessed import Terminal
 
@@ -18,6 +19,8 @@ class TwitterClient:
         self.screen   = Screen()
         self.terminal = Terminal()
         self.reducer  = RootReducer()
+        self.keyboardEventHandler = KeyboardEventHandler()
+
         self.state    = self._initialState()
 
         self.timelineView = TimelineView()
@@ -65,16 +68,7 @@ class TwitterClient:
         return fetch_tweets()
 
     def _actions(self, key):
-        key_to_action_map = {
-            'k': { 'name': 'CURSOR_MOVE', 'amount' : -1 },
-            'j': { 'name': 'CURSOR_MOVE', 'amount' : 1 },
-            'u': { 'name': 'CURSOR_MOVE', 'amount' : -10 },
-            'd': { 'name': 'CURSOR_MOVE', 'amount' : 10 },
-            'KEY_TAB': { 'name': 'SWITCH_TAB', },
-        }
-        if key in key_to_action_map:
-            return key_to_action_map[ key ]
-        return { 'name': 'None' }
+        return self.keyboardEventHandler.getAction(key)
 
     def render(self, dims, state):
         self.terminal.move(0, 0)
