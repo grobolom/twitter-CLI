@@ -1,10 +1,12 @@
+import TwitterCLI.colors as colors
+
 class TweetTabView():
     def render(self, state):
         lines = []
 
         header = [
-            'TwitterCLI',
-            '@grobolom',
+            colors.title('TwitterCLI'.ljust(20)),
+            colors.user('@grobolom'.ljust(20)),
             '',
         ]
 

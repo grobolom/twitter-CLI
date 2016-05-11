@@ -3,6 +3,8 @@ import unittest
 from TwitterCLI.views.TweetTabView import TweetTabView
 from TwitterCLI.Tweet import Tweet
 
+import TwitterCLI.colors as colors
+
 class TestTweetTabView(unittest.TestCase):
     def test_it_should_display_a_title_and_username(self):
         v = TweetTabView()
@@ -11,8 +13,8 @@ class TestTweetTabView(unittest.TestCase):
         }
         actual = v.render(state)
         self.assertEqual(actual[0:2], [
-            'TwitterCLI          ',
-            '@grobolom           ',
+            colors.title('TwitterCLI          '),
+            colors.user( '@grobolom           '),
         ])
 
     def test_it_should_render_all_tabs(self):
@@ -26,8 +28,8 @@ class TestTweetTabView(unittest.TestCase):
         }
         actual = v.render(state)
         self.assertEqual(actual, [
-            'TwitterCLI          ',
-            '@grobolom           ',
+            colors.title('TwitterCLI          '),
+            colors.user( '@grobolom           '),
             '                    ',
             '  Tweets            ',
             '  Home Timeline     ',
@@ -46,8 +48,8 @@ class TestTweetTabView(unittest.TestCase):
         }
         actual = v.render(state)
         self.assertEqual(actual, [
-            'TwitterCLI          ',
-            '@grobolom           ',
+            colors.title('TwitterCLI          '),
+            colors.user( '@grobolom           '),
             '                    ',
             '  Tweets            ',
             '  Home Timeline     ',

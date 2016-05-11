@@ -4,6 +4,7 @@ USER     = colors.GREEN
 LINK     = colors.LIGHT_BLUE
 MENTION  = colors.LIGHT_YELLOW
 HASHTAG  = colors.LIGHT_PURPLE
+TITLE    = colors.GREEN
 
 def color(string, color):
     return color + string + colors.ENDC
@@ -19,3 +20,6 @@ def mention(string):
 
 def hashtag(string):
     return color(string, HASHTAG)
+
+def title(string):
+    return color(string, TITLE)
