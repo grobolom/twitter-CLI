@@ -28,7 +28,7 @@ class TweetTabView():
                     result = '  ' + line
 
                 if l == selected:
-                    result = colors.mention(result.ljust(20))
+                    result = colors.selected(result.ljust(20))
 
                 lines += [ result.ljust(20) ]
 

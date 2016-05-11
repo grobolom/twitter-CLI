@@ -5,6 +5,7 @@ LINK     = colors.LIGHT_BLUE
 MENTION  = colors.LIGHT_YELLOW
 HASHTAG  = colors.LIGHT_PURPLE
 TITLE    = colors.GREEN
+SELECTED = colors.BLACK_ON_WHITE
 
 def color(string, color):
     return color + string + colors.ENDC
@@ -23,3 +24,6 @@ def hashtag(string):
 
 def title(string):
     return color(string, TITLE)
+
+def selected(string):
+    return color(string, SELECTED)

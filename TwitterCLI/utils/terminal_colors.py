@@ -1,6 +1,7 @@
-GREEN        = '\033[92m'
-LIGHT_BLUE   = '\033[94m'
-LIGHT_YELLOW = '\033[33m'
-LIGHT_PURPLE = '\033[95m'
+GREEN          = '\033[92m'
+LIGHT_BLUE     = '\033[94m'
+LIGHT_YELLOW   = '\033[33m'
+LIGHT_PURPLE   = '\033[95m'
+BLACK_ON_WHITE = '\033[0;30;47m'
 
 ENDC = '\033[0m'
