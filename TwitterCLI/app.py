@@ -70,6 +70,7 @@ class TwitterClient:
             'j': { 'name': 'CURSOR_MOVE', 'amount' : 1 },
             'u': { 'name': 'CURSOR_MOVE', 'amount' : -10 },
             'd': { 'name': 'CURSOR_MOVE', 'amount' : 10 },
+            'KEY_TAB': { 'name': 'SWITCH_TAB', },
         }
         if key in key_to_action_map:
             return key_to_action_map[ key ]
