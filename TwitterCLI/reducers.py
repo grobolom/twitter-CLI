@@ -1,6 +1,7 @@
 class RootReducer:
     def reduce(self, state, action):
         name = action['name']
+
         if name:
             state['last_action'] = name
 
@@ -8,7 +9,6 @@ class RootReducer:
             return self._cursorMove(state, action)
         elif name == 'SWITCH_TAB':
             return self._switchTab(state, action)
-
 
         return state
 
@@ -20,9 +20,10 @@ class RootReducer:
         extremes of the list and thus we select the correct limit instead
         """
 
-        amount = action['amount']
-        cursor = state['cursor'] + amount
+        amount     = action['amount']
+        cursor     = state['cursor'] + amount
         cursor_max = state['cursor_max']
+
         state['cursor'] = sorted([0, cursor, cursor_max])[1]
 
         return state
