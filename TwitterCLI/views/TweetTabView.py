@@ -12,8 +12,9 @@ class TweetTabView():
 
         lines += header
 
-        timelines = []
-        lists = []
+        selected = ''
+        if 'selected_list' in state:
+            selected = state['selected_list']
 
         if 'available_lists' in state:
             _lists = state['available_lists']
@@ -21,15 +22,14 @@ class TweetTabView():
                 if '.' in l:
                     (a, n) = l.split('.')
                     name = ' '.join([ e.capitalize() for e in n.split('_')])
-                    lists += [ '    ' + name ]
+                    result = '    ' + name
                 else:
                     line = ' '.join([ e.capitalize() for e in l.split('_')])
-                    lines += [ '  ' + line ]
+                    result = '  ' + line
 
-        lines += timelines
-        if lists:
-            lines += ['']
-            lines += ['  Lists:']
-            lines += lists
+                if l == selected:
+                    result = colors.mention(result.ljust(20))
+
+                lines += [ result.ljust(20) ]
 
         return [ line.ljust(20) for line in lines ]

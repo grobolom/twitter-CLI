@@ -53,8 +53,6 @@ class TestTweetTabView(unittest.TestCase):
             '                    ',
             '  Tweets            ',
             '  Home Timeline     ',
-            '                    ',
-            '  Lists:            ',
             '    Friends         ',
             '    Other List      ',
         ])
