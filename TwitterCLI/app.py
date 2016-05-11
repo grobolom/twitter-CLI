@@ -91,6 +91,6 @@ class TwitterClient:
         self.terminal.move(0, 0)
         self.screen.render(self.terminal, [
             (0, 0, self.tweetWindow.render(state)),
-            (_w - 19, 0, self.tweetTabView.render(state)),
+            (_w - 20, 0, self.tweetTabView.render(state)),
         ])
         self.terminal.move(0, 0)
