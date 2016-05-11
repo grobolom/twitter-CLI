@@ -55,7 +55,8 @@ class TwitterClient:
                 'tweets',
                 'home_timeline',
                 'lists.friends',
-            ]
+            ],
+            'last_action': 'none',
         }
 
     def _getTweets(self):
@@ -79,5 +80,6 @@ class TwitterClient:
                 state['tweets'], state['cursor'], 86, dims[1] - 1
             )),
             (dims[0] - 20, 0, self.tweetTabView.render(state)),
+            (dims[0] - 20, 20, [ state['last_action'] ]),
         ])
         self.terminal.move(0, 0)
