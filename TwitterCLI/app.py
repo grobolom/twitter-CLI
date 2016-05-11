@@ -8,8 +8,10 @@ from TwitterCLI.views.TweetTabView import TweetTabView
 
 from TwitterCLI.fetch_tweets import fetch_tweets
 from TwitterCLI.TweetBuilder import TweetBuilder
+
 from TwitterCLI.reducers import RootReducer
 from TwitterCLI.actions import KeyboardEventHandler
+from TwitterCLI.containers import TweetWindow
 
 from blessed import Terminal
 
@@ -23,6 +25,7 @@ class TwitterClient:
 
         self.state    = self._initialState()
 
+        self.tweetWindow  = TweetWindow()
         self.timelineView = TimelineView()
         self.tweetTabView = TweetTabView()
 
@@ -34,15 +37,19 @@ class TwitterClient:
             with self.terminal.cbreak():
                 key = ''
                 while key != '\x03':
-                    if key == 'x':
-                        os.system('clear')
+
+                    # TODO: move this somewhere where it makes sense
                     dims = shutil.get_terminal_size()
+
+                    state['screen_width']  = dims[0]
+                    state['screen_height'] = dims[1]
+
                     action = self._actions(key)
 
                     state = self.reducer.reduce(state, action)
 
                     if state != old_state:
-                        self.render(dims, state)
+                        self.render(state)
 
                     old_state = dict.copy(state)
 
@@ -54,9 +61,11 @@ class TwitterClient:
         return {
             'cursor': 0,
             'cursor_max': 200,
-            'tweets': self._getTweets(),
+            'tweets': {
+                'lists.friends': self._getTweets(),
+            },
             'username': 'grobolom',
-            'selected_list': 'list.friends',
+            'selected_list': 'lists.friends',
             'available_lists': [
                 'tweets',
                 'home_timeline',
@@ -71,13 +80,13 @@ class TwitterClient:
     def _actions(self, key):
         return self.keyboardEventHandler.getAction(key)
 
-    def render(self, dims, state):
+    def render(self, state):
+        _w = state['screen_width']
+        _h = state['screen_height']
+
         self.terminal.move(0, 0)
         self.screen.render(self.terminal, [
-            (0, 0, self.timelineView.render(
-                state['tweets'], state['cursor'], 86, dims[1] - 1
-            )),
-            (dims[0] - 20, 0, self.tweetTabView.render(state)),
-            (dims[0] - 20, 20, [ state['last_action'] ]),
+            (0, 0, self.tweetWindow.render(state)),
+            (_w - 20, 0, self.tweetTabView.render(state)),
         ])
         self.terminal.move(0, 0)
