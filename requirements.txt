@@ -4,6 +4,3 @@ blessed
 
 # testing stuff
 nose
-nose-watch
-rednose
-coverage
