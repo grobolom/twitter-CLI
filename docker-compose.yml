@@ -1,4 +1,4 @@
-web:
+twitter-cli:
     build: .
     command: python -u ./main.py
     ports:
