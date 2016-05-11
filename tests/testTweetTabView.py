@@ -14,3 +14,21 @@ class TestTweetTabView(unittest.TestCase):
             'TwitterCLI          ',
             '@grobolom           ',
         ])
+
+    def test_it_should_render_all_tabs(self):
+        v = TweetTabView()
+        state = {
+            'username': 'grobolom',
+            'available_lists': [
+                'tweets',
+                'home_timeline',
+            ]
+        }
+        actual = v.render(state)
+        self.assertEqual(actual, [
+            'TwitterCLI          ',
+            '@grobolom           ',
+            '                    ',
+            ' Tweets             ',
+            ' Home Timeline      ',
+        ])
