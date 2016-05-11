@@ -6,6 +6,16 @@ class TestRootReducer(unittest.TestCase):
     def setUp(self):
         self.rootReducer = RootReducer()
 
+    def test_it_should_return_the_same_state_if_action_is_invalid(self):
+        state = {
+            'cursor': 50,
+        }
+        action = {
+            'name' : 'INVALID_ACTION123'
+        }
+        new_state = self.rootReducer.reduce(state, action)
+        self.assertEquals(new_state, state)
+
     def test_scrolls_cursor_down(self):
         state = {
             'cursor' : 0,
