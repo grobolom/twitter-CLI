@@ -4,13 +4,7 @@ from TwitterCLI.views.TimelineView import TimelineView
 from TwitterCLI.Tweet import Tweet
 
 # dump colors for ease of use
-from TwitterCLI.Renderer import TermAnsiColors
-
-OKGREEN = TermAnsiColors.OKGREEN
-BLUE    = TermAnsiColors.LINK
-ENDC    = TermAnsiColors.ENDC
-MENTION = TermAnsiColors.MENTION
-HASHTAG = TermAnsiColors.HASHTAG
+import TwitterCLI.colors as colors
 
 class TestTimelineView(unittest.TestCase):
     def test_it_should_render_tweets(self):
@@ -21,8 +15,8 @@ class TestTimelineView(unittest.TestCase):
         ]
         actual = view.render(tweets=tweets, cursor=0, width=20, height=2)
         self.assertEqual(actual, [
-            OKGREEN + '           grob' + ENDC + ' bla ',
-            OKGREEN + '           blob' + ENDC + ' haha',
+            colors.color('           grob', colors.USER) + ' bla ',
+            colors.color('           blob', colors.USER) + ' haha',
         ])
 
     def test_it_should_not_render_lines_outside_screen(self):
@@ -52,8 +46,8 @@ class TestTimelineView(unittest.TestCase):
         ]
         actual = view.render(tweets=tweets, cursor=0, width=20, height=2)
         self.assertEqual(actual, [
-            OKGREEN + '           grob' + ENDC + ' fooo',
-                      '               ' +        ' baar',
+            colors.color('           grob', colors.USER) + ' fooo',
+                         '               '               + ' baar',
         ])
 
     def test_it_should_display_tweets_at_the_cursor_position(self):
@@ -64,7 +58,7 @@ class TestTimelineView(unittest.TestCase):
         ]
         actual = view.render(tweets=tweets, cursor=1, width=20, height=1)
         self.assertEqual(actual, [
-            OKGREEN + '           blob' + ENDC + ' haha',
+            colors.color('           blob', colors.USER) + ' haha',
         ])
 
     def test_it_should_treat_negative_cursor_positions_as_zero(self):
@@ -84,7 +78,7 @@ class TestTimelineView(unittest.TestCase):
         ]
         actual = view.render(tweets=tweets, cursor=0, width=20, height=2)
         self.assertEqual(actual, [
-            OKGREEN + '           grob' + ENDC + ' bla ',
+            colors.color('           grob', colors.USER) + ' bla ',
                       '               ' +        '     ',
         ])
 
@@ -95,7 +89,7 @@ class TestTimelineView(unittest.TestCase):
         ]
         actual = view.render(tweets=tweets, cursor=0, width=20, height=4)
         self.assertEqual(actual, [
-            OKGREEN + '           grob' + ENDC + ' fooo',
+            colors.color('           grob', colors.USER) + ' fooo',
                       '               ' +        ' baar',
                       '               ' +        ' no  ',
                       '               ' +        '     ',
@@ -108,8 +102,8 @@ class TestTimelineView(unittest.TestCase):
         ]
         actual = view.render(tweets, 0, 16 + 24, 1)
         self.assertEqual(actual, [
-            OKGREEN + '           grob' \
-                    + ENDC + ' foo ' + BLUE + 'http://something.xom' + ENDC,
+            colors.color('           grob', colors.USER) \
+                + ' foo ' + colors.color('http://something.xom', colors.LINK),
         ])
 
     def test_it_should_color_mentions_yellow(self):
@@ -119,8 +113,8 @@ class TestTimelineView(unittest.TestCase):
         ]
         actual = view.render(tweets, 0, 16 + 12, 1)
         self.assertEqual(actual, [
-            OKGREEN + '           grob' \
-                    + ENDC + ' foo ' + MENTION + '@groblem' + ENDC,
+            colors.color('           grob', colors.USER) \
+                + ' foo ' + colors.color('@groblem', colors.MENTION),
         ])
 
     def test_it_should_color_hashtags(self):
@@ -130,6 +124,6 @@ class TestTimelineView(unittest.TestCase):
         ]
         actual = view.render(tweets, 0, 16 + 12, 1)
         self.assertEqual(actual, [
-            OKGREEN + '           grob' \
-                    + ENDC + ' foo ' + HASHTAG + '#groblem' + ENDC,
+            colors.color('           grob', colors.USER) \
+                + ' foo ' + colors.color('#groblem', colors.HASHTAG),
         ])
