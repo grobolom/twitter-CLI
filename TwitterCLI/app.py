@@ -6,7 +6,7 @@ from TwitterCLI.Screen import Screen
 from TwitterCLI.views.TimelineView import TimelineView
 from TwitterCLI.views.TweetTabView import TweetTabView
 
-from TwitterCLI.fetch_tweets import fetch_tweets
+from TwitterCLI.fetch_tweets import fetch_tweets, fetch_friend_list
 from TwitterCLI.TweetBuilder import TweetBuilder
 
 from TwitterCLI.reducers import RootReducer
@@ -62,7 +62,8 @@ class TwitterClient:
             'cursor': 0,
             'cursor_max': 200,
             'tweets': {
-                'lists.friends': self._getTweets(),
+                'tweets': self._getTweets(),
+                'lists.friends': self._getMainList(),
             },
             'username': 'grobolom',
             'selected_list': 'lists.friends',
@@ -77,6 +78,9 @@ class TwitterClient:
     def _getTweets(self):
         return fetch_tweets()
 
+    def _getMainList(self):
+        return fetch_friend_list()
+
     def _actions(self, key):
         return self.keyboardEventHandler.getAction(key)
 
@@ -87,6 +91,6 @@ class TwitterClient:
         self.terminal.move(0, 0)
         self.screen.render(self.terminal, [
             (0, 0, self.tweetWindow.render(state)),
-            (_w - 20, 0, self.tweetTabView.render(state)),
+            (_w - 19, 0, self.tweetTabView.render(state)),
         ])
         self.terminal.move(0, 0)
