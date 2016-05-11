@@ -1,13 +1,7 @@
 import textwrap
 import re
 
-from TwitterCLI.Renderer import TermAnsiColors
-
-GREEN   = TermAnsiColors.OKGREEN
-END     = TermAnsiColors.ENDC
-BLUE    = TermAnsiColors.LINK
-MENTION = TermAnsiColors.MENTION
-HASHTAG = TermAnsiColors.HASHTAG
+import TwitterCLI.colors as colors
 
 class TimelineView:
     def render(self, tweets, cursor, width, height):
@@ -28,7 +22,7 @@ class TimelineView:
         return tweet_lines
 
     def _renderTweet(self, tweet, width):
-        author = GREEN + tweet.author.rjust(15) + END
+        author = colors.user(tweet.author.rjust(15))
         gutter = ' ' * 16
 
         t = tweet.text
@@ -44,7 +38,7 @@ class TimelineView:
 
     def _formatText(self, text, width):
         t = text.ljust(width)
-        t = re.sub(r'(https?://[^\s]+)+', BLUE + '\\1' + END, t)
-        t = re.sub(r'(@[\w]+)+', MENTION + '\\1' + END, t)
-        t = re.sub(r'(#[\w]+)+', HASHTAG + '\\1' + END, t)
+        t = re.sub(r'(https?://[^\s]+)+', colors.link('\\1'), t)
+        t = re.sub(r'(@[\w]+)+', colors.mention('\\1'), t)
+        t = re.sub(r'(#[\w]+)+', colors.hashtag('\\1'), t)
         return t
