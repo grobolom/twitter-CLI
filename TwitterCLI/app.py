@@ -44,6 +44,8 @@ class TwitterClient:
                     old_state = dict.copy(state)
 
                     key = self.terminal.inkey(timeout = 5)
+                    if key.is_sequence:
+                        key = key.name
 
     def _initialState(self):
         return {
