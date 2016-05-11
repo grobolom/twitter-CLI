@@ -56,6 +56,7 @@ class TwitterClient:
             'cursor_max': 200,
             'tweets': self._getTweets(),
             'username': 'grobolom',
+            'selected_list': 'list.friends',
             'available_lists': [
                 'tweets',
                 'home_timeline',
