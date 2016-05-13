@@ -1,16 +1,14 @@
 class RootReducer:
     def reduce(self, state, action):
+        s = state.copy()
+
         name = action['name']
-
-        if name:
-            state['last_action'] = name
-
         if name == 'CURSOR_MOVE':
-            return self._cursorMove(state, action)
+            return self._cursorMove(s, action)
         elif name == 'SWITCH_TAB':
-            return self._switchTab(state, action)
+            return self._switchTab(s, action)
 
-        return state
+        return s
 
     def _cursorMove(self, state, action):
         """
@@ -36,7 +34,7 @@ class RootReducer:
         need to
         """
         current = state['selected_list']
-        lists   = state['available_lists']
+        lists   = self._listOrder(state)
 
         if current in lists:
             index      = lists.index(current)
@@ -48,3 +46,18 @@ class RootReducer:
             state['selected_list'] = lists[0]
 
         return state
+
+    def _listOrder(self, state):
+        keys = state['lists'].keys()
+
+        order = []
+        if 'tweets' in keys:
+            order += [ 'tweets' ]
+        if 'home_timeline' in keys:
+            order += [ 'home_timeline' ]
+
+        other_lists = []
+        for key in keys:
+            if key not in other_lists and key not in order:
+                other_lists += [ key ]
+        return order + sorted(other_lists)

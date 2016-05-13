@@ -67,10 +67,10 @@ class TestRootReducer(unittest.TestCase):
     def test_it_should_switch_lists_on_tab(self):
         state = {
             'selected_list': 'tweets',
-            'available_lists': [
-                'tweets',
-                'list.next',
-            ]
+            'lists': {
+                'tweets': [],
+                'list.next': [],
+            }
         }
         action = {
             'name' : 'SWITCH_TAB',
@@ -81,10 +81,10 @@ class TestRootReducer(unittest.TestCase):
     def test_it_should_switch_to_first_list_after_last(self):
         state = {
             'selected_list': 'list.next',
-            'available_lists': [
-                'tweets',
-                'list.next',
-            ]
+            'lists': {
+                'tweets': [],
+                'list.next': [],
+            }
         }
         action = {
             'name' : 'SWITCH_TAB',
@@ -95,9 +95,9 @@ class TestRootReducer(unittest.TestCase):
     def test_it_should_select_the_first_tab_if_invalid_tab_selected(self):
         state = {
             'selected_list': 'notreal',
-            'available_lists': [
-                'tweets',
-            ]
+            'lists': {
+                'tweets': [],
+            }
         }
         action = {
             'name' : 'SWITCH_TAB',
@@ -105,3 +105,17 @@ class TestRootReducer(unittest.TestCase):
         state = self.rootReducer.reduce(state, action)
         self.assertEqual(state['selected_list'], 'tweets')
 
+    def test_it_should_switch_tabs_in_the_correct_order(self):
+        state = {
+            'selected_list': 'tweets',
+            'lists': {
+                'tweets': [],
+                'list.friends': [],
+                'list.enemies': [],
+            }
+        }
+        action = {
+            'name' : 'SWITCH_TAB',
+        }
+        state_one = self.rootReducer.reduce(state, action)
+        self.assertEqual(state_one['selected_list'], 'list.enemies')
