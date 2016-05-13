@@ -17,9 +17,8 @@ class TweetTabView():
             selected = state['selected_list']
 
         if 'lists' in state:
-            _lists = state['lists'].keys()
+            _lists = self._listOrder(state)
             for l in _lists:
-                print(l)
                 if '.' in l:
                     (a, n) = l.split('.')
                     name = ' '.join([ e.capitalize() for e in n.split('_')])
@@ -34,3 +33,16 @@ class TweetTabView():
                 lines += [ result.ljust(20) ]
 
         return [ line.ljust(20) for line in lines ]
+
+    def _listOrder(self, state):
+        order = [
+            'tweets',
+            'home_timeline',
+        ]
+
+        other_lists = []
+        keys = state['lists'].keys()
+        for key in keys:
+            if key not in other_lists and key not in order:
+                other_lists += [ key ]
+        return order + sorted(other_lists)
