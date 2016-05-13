@@ -14,3 +14,7 @@ class TweetFetcher:
     def getTweets(self):
         tweets = json.loads(self.source.getNewTweets())
         return self.builder.buildTweets(tweets)
+
+    def getLists(self):
+        lists = json.loads(self.source.getLists())
+        return [ e['name'] for e in lists ]
