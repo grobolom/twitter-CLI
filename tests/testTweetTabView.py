@@ -21,10 +21,10 @@ class TestTweetTabView(unittest.TestCase):
         v = TweetTabView()
         state = {
             'username': 'grobolom',
-            'lists': [
-                'tweets',
-                'home_timeline',
-            ]
+            'lists': {
+                'tweets' : [],
+                'home_timeline' : [],
+                }
         }
         actual = v.render(state)
         self.assertEqual(actual, [
@@ -39,12 +39,12 @@ class TestTweetTabView(unittest.TestCase):
         v = TweetTabView()
         state = {
             'username': 'grobolom',
-            'lists': [
-                'tweets',
-                'home_timeline',
-                'list.friends',
-                'list.other_list',
-            ]
+            'lists': {
+                'tweets' : [],
+                'home_timeline' : [],
+                'list.friends' : [],
+                'list.other_list' : [],
+            }
         }
         actual = v.render(state)
         self.assertEqual(actual, [
