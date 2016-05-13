@@ -13,6 +13,7 @@ from TwitterCLI.actions import KeyboardEventHandler
 from TwitterCLI.containers import TweetWindow
 
 from TweetSource.TweetSource import TweetSource
+from TweetSource.modules import TweetFetcher
 from TweetSource.utils import getTwitter
 
 from blessed import Terminal
@@ -33,6 +34,7 @@ class TwitterClient:
             config = json.load(twitter_config)
         twitter = getTwitter(config)
         self.tweetSource = TweetSource(config, twitter)
+        self.tweetFetcher = TweetFetcher(self.tweetSource)
 
         self.state    = self._initialState()
 
@@ -69,20 +71,20 @@ class TwitterClient:
             return
 
     def _initialState(self):
+        lists = {
+            'tweets': self.tweetFetcher.getTweets(),
+            'home_timeline': self.tweetFetcher.getHomeTimeline(),
+        }
+
+        for _list in self.tweetFetcher.getLists():
+            lists[ _list ] = self.tweetFetcher.getListTweets(_list)
+
         return {
             'cursor': 0,
             'cursor_max': 200,
-            'tweets': {
-                'tweets': self.tweetSource.get_new_tweets(),
-                'lists.friends': self.tweetSource.get_list_tweets('friends')
-            },
             'username': 'grobolom',
-            'selected_list': 'lists.friends',
-            'available_lists': [
-                'tweets',
-                'home_timeline',
-                'lists.friends',
-            ],
+            'selected_list': 'tweets',
+            'lists': lists,
             'last_action': 'none',
         }
 
