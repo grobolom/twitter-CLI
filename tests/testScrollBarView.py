@@ -9,7 +9,7 @@ class TestScrollBarView(unittest.TestCase):
         page_height = 10
 
         scrollbar = ScrollBar()
-        result = ScrollBar.render(
+        result = scrollbar.render(
             height,
             cursor,
             cursor_max,
@@ -24,7 +24,7 @@ class TestScrollBarView(unittest.TestCase):
         page_height = 10
 
         scrollbar = ScrollBar()
-        result = ScrollBar.render(
+        result = scrollbar.render(
             height,
             cursor,
             cursor_max,

@@ -1,5 +1,5 @@
 class ScrollBar:
-    def render(height, cursor, c_max, page_height):
+    def render(self, height, cursor, c_max, page_height):
         cursor_size  = int(height * (page_height / c_max))
         cursor_start = int(height * (cursor / c_max))
         cursor_end   = cursor_start + cursor_size
