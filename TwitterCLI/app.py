@@ -60,9 +60,9 @@ class TwitterClient:
         while True:
             state = self._appendDims(state)
             state = self._handleState(key, state)
-            key = self._handleKey()
+            key = self._handleKey(self.terminal)
 
-    def _handleKey(self):
+    def _handleKey(self, terminal):
         key = ''
         with self.terminal.cbreak():
             key = self.terminal.inkey(timeout = 1)
@@ -86,13 +86,7 @@ class TwitterClient:
         return state
 
     def _initialState(self):
-        lists = {
-            'tweets': self.tweetFetcher.getTweets(),
-            'home_timeline': self.tweetFetcher.getHomeTimeline(),
-        }
-
-        for _list in self.tweetFetcher.getLists():
-            lists[ _list ] = self.tweetFetcher.getListTweets(_list)
+        lists = self._getTweetLists()
 
         return {
             'cursor': 0,
@@ -102,12 +96,14 @@ class TwitterClient:
             'lists': lists,
             'last_action': 'none',
         }
-
-    def _getTweets(self):
-        return fetch_tweets()
-
-    def _getMainList(self):
-        return fetch_friend_list()
+    def _getTweetLists()
+        lists = {
+            'tweets': self.tweetFetcher.getTweets(),
+            'home_timeline': self.tweetFetcher.getHomeTimeline(),
+        }
+        for _list in self.tweetFetcher.getLists():
+            lists[ _list ] = self.tweetFetcher.getListTweets(_list)
+        return lists
 
     def _actions(self, key):
         return self.keyboardEventHandler.getAction(key)
