@@ -15,6 +15,15 @@ class TestTweetFetcher(unittest.TestCase):
         }]
         """)
 
+        self.source.getListTweets = Mock(return_value="""
+        [{
+            "user": {
+                "screen_name":"grobolom"
+            },
+            "text":"something"
+        }]
+        """)
+
         self.source.getLists = Mock(return_value="""
         [{ "name": "friends" }, { "name": "enemies" }]
         """)
@@ -28,3 +37,8 @@ class TestTweetFetcher(unittest.TestCase):
     def test_it_should_return_lists(self):
         result = self.tf.getLists()
         self.assertEqual(result, [ 'friends', 'enemies' ])
+
+    def test_it_should_return_list_tweets(self):
+        result = self.tf.getListTweets('friends')
+        self.assertEqual([ result[0].author, result[0].text ],
+            [ 'grobolom', 'something' ])
