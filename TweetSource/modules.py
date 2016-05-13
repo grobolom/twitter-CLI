@@ -12,17 +12,17 @@ class TweetFetcher:
         self.builder = TweetBuilder()
 
     def getTweets(self):
-        tweets = json.loads(self.source.getNewTweets())
+        tweets = self.source.getNewTweets()
         return self.builder.buildTweets(tweets)
 
     def getLists(self):
-        lists = json.loads(self.source.getLists())
+        lists = self.source.getLists()
         return [ e['name'] for e in lists ]
 
     def getListTweets(self, list_name):
-        tweets = json.loads(self.source.getListTweets(list_name))
+        tweets = self.source.getListTweets(list_name)
         return self.builder.buildTweets(tweets)
 
     def getHomeTimeline(self):
-        tweets = json.loads(self.source.getHomeTimeline())
+        tweets = self.source.getHomeTimeline()
         return self.builder.buildTweets(tweets)

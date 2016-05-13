@@ -5,22 +5,23 @@ from TweetSource.modules import TweetFetcher
 
 class TestTweetFetcher(unittest.TestCase):
     def setUp(self):
-        fakeTweets = """
-        [{
-            "user": {
-                "screen_name":"grobolom"
-            },
-            "text":"something"
-        }]
-        """
+        fakeTweets = [
+            {
+                "user": {
+                    "screen_name": "grobolom"
+                },
+                "text": "something"
+            }
+        ]
 
         self.source = Mock()
         self.source.getNewTweets    = Mock(return_value=fakeTweets)
         self.source.getListTweets   = Mock(return_value=fakeTweets)
         self.source.getHomeTimeline = Mock(return_value=fakeTweets)
-        self.source.getLists        = Mock(return_value="""
-        [{ "name": "friends" }, { "name": "enemies" }]
-        """)
+        self.source.getLists        = Mock(return_value=[
+            { "name": "friends" },
+            { "name": "enemies" }
+        ])
         self.tf = TweetFetcher(self.source)
 
     def test_it_should_return_tweets(self):
