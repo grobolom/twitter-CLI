@@ -1,4 +1,5 @@
 import unittest
+from collections import OrderedDict
 
 from TwitterCLI.views.TweetTabView import TweetTabView
 from TwitterCLI.Tweet import Tweet
@@ -21,10 +22,10 @@ class TestTweetTabView(unittest.TestCase):
         v = TweetTabView()
         state = {
             'username': 'grobolom',
-            'available_lists': [
-                'tweets',
-                'home_timeline',
-            ]
+            'lists': OrderedDict([
+                ('tweets', []),
+                ('home_timeline',[]),
+            ])
         }
         actual = v.render(state)
         self.assertEqual(actual, [
@@ -39,12 +40,12 @@ class TestTweetTabView(unittest.TestCase):
         v = TweetTabView()
         state = {
             'username': 'grobolom',
-            'available_lists': [
-                'tweets',
-                'home_timeline',
-                'list.friends',
-                'list.other_list',
-            ]
+            'lists': OrderedDict([
+                ('tweets', []),
+                ('home_timeline',[]),
+                ('list.friends', []),
+                ('list.other_list', []),
+            ])
         }
         actual = v.render(state)
         self.assertEqual(actual, [

@@ -16,9 +16,10 @@ class TweetTabView():
         if 'selected_list' in state:
             selected = state['selected_list']
 
-        if 'available_lists' in state:
-            _lists = state['available_lists']
+        if 'lists' in state:
+            _lists = state['lists'].keys()
             for l in _lists:
+                print(l)
                 if '.' in l:
                     (a, n) = l.split('.')
                     name = ' '.join([ e.capitalize() for e in n.split('_')])
