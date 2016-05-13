@@ -16,7 +16,7 @@ class TestScrollBarView(unittest.TestCase):
             page_height
         )
         self.assertEqual("".join(result),
-            "   XX               ")
+            "   " + chr(9608) * 2 + "               ")
 
         height      = 10
         cursor      = 35
@@ -31,4 +31,4 @@ class TestScrollBarView(unittest.TestCase):
             page_height
         )
         self.assertEqual("".join(result),
-            "   X      ")
+            "   " + chr(9608) + "      ")

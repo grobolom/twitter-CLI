@@ -5,7 +5,7 @@ class ScrollBar:
         cursor_end   = cursor_start + cursor_size
 
         left      = [ " " for e in range(0, cursor_start) ]
-        scrollbar = [ "X" for e in range(0, cursor_size) ]
+        scrollbar = [ chr(9608) for e in range(0, cursor_size) ]
         right     = [ " " for e in range(cursor_end, height) ]
 
         return left + scrollbar + right
