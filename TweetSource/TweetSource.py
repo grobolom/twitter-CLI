@@ -6,15 +6,7 @@ class TweetSource:
         self.twitter = twitter
         self.builder = TweetBuilder()
 
-    def get_new_tweets(self):
-        tweets = self._getNewTweets()
-        return self.builder.buildTweets(tweets)
-
-    def get_list_tweets(self, list_name):
-        tweets = self._getListTweets(list_name)
-        return self.builder.buildTweets(tweets)
-
-    def _getNewTweets(self, since=None):
+    def getNewTweets(self, since=None):
         params = {}
         if since:
             params['since'] = since
@@ -26,12 +18,12 @@ class TweetSource:
             **params
         )
 
-    def _getLists(self):
+    def getLists(self):
         return self.twitter.lists.list(
             screen_name = self.config['user']
         )
 
-    def _getListTweets(self, list_name, since=None):
+    def getListTweets(self, list_name, since=None):
         params = {}
         if since:
             params['since'] = since

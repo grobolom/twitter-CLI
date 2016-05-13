@@ -15,7 +15,7 @@ class TestTweetSource(unittest.TestCase):
         self.ts = TweetSource(self.config, self.twitter)
 
     def test_it_should_fetch_latest_tweets_from_twitter(self):
-        self.ts._getNewTweets(since=800)
+        self.ts.getNewTweets(since=800)
         self.twitter.statuses.user_timeline.assert_called_once_with(
             screen_name = 'grob',
             count = 500,
@@ -23,7 +23,7 @@ class TestTweetSource(unittest.TestCase):
             since = 800
         )
     def test_it_should_fetch_some_tweets_from_twitter(self):
-        self.ts._getNewTweets()
+        self.ts.getNewTweets()
         self.twitter.statuses.user_timeline.assert_called_once_with(
             screen_name = 'grob',
             count = 500,
@@ -31,7 +31,7 @@ class TestTweetSource(unittest.TestCase):
         )
 
     def test_it_should_fetch_a_list_from_twitter(self):
-        self.ts._getListTweets('friends')
+        self.ts.getListTweets('friends')
         self.twitter.lists.statuses.assert_called_once_with(
             slug = 'friends',
             owner_screen_name = 'grob',
@@ -40,7 +40,7 @@ class TestTweetSource(unittest.TestCase):
         )
 
     def test_it_should_fetch_users_list_names(self):
-        self.ts._getLists()
+        self.ts.getLists()
         self.twitter.lists.list.assert_called_once_with(
             screen_name = 'grob'
         )
