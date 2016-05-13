@@ -14,8 +14,8 @@ class TweetWindow():
         cursor        = state['cursor']
         selected_list = state['selected_list']
 
-        if selected_list in state['tweets']:
-            tweets = state['tweets'][ selected_list ]
+        if selected_list in state['lists']:
+            tweets = state['lists'][ selected_list ]
         else:
             tweets = []
 

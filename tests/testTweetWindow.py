@@ -15,7 +15,7 @@ class TestTweetWindow(unittest.TestCase):
             'screen_height': 20,
             'cursor' : 0,
             'selected_list' : 'somelist',
-            'tweets': {
+            'lists': {
                 'somelist': [ self.dummy_tweet ]
             },
         }
