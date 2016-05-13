@@ -3,7 +3,7 @@ import re
 
 import TwitterCLI.colors as colors
 
-class TimelineView:
+class Timeline:
     def render(self, tweets, cursor, width, height):
         lines = []
         for tweet in tweets:

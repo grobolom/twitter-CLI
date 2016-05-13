@@ -1,13 +1,13 @@
 import unittest
 
-from TwitterCLI.views.TweetTabView import TweetTabView
+from TwitterCLI.views import TweetTab
 from TwitterCLI.Tweet import Tweet
 
 import TwitterCLI.colors as colors
 
 class TestTweetTabView(unittest.TestCase):
     def test_it_should_display_a_title_and_username(self):
-        v = TweetTabView()
+        v = TweetTab()
         state = {
             'username': 'grobolom',
         }
@@ -18,7 +18,7 @@ class TestTweetTabView(unittest.TestCase):
         ])
 
     def test_it_should_render_all_tabs(self):
-        v = TweetTabView()
+        v = TweetTab()
         state = {
             'username': 'grobolom',
             'lists': {
@@ -36,7 +36,7 @@ class TestTweetTabView(unittest.TestCase):
         ])
 
     def test_it_should_render_lists(self):
-        v = TweetTabView()
+        v = TweetTab()
         state = {
             'username': 'grobolom',
             'lists': {

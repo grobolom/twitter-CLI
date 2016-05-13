@@ -1,7 +1,7 @@
 import unittest
 
 from TwitterCLI.containers import TweetWindow
-from TwitterCLI.views.TimelineView import TimelineView
+from TwitterCLI.views import Timeline
 from TwitterCLI.Tweet import Tweet
 
 class TestTweetWindow(unittest.TestCase):
@@ -9,7 +9,7 @@ class TestTweetWindow(unittest.TestCase):
         self.dummy_tweet = Tweet('dummy', 'dummy_text')
 
     def test_it_should_render_the_timeline_view(self):
-        view = TimelineView()
+        view = Timeline()
         state = {
             'screen_width': 80,
             'screen_height': 20,

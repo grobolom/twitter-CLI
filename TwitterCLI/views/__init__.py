@@ -1,3 +1,3 @@
 from .SplashScreen import SplashScreen
-from .TimelineView import TimelineView
-from .TweetTabView import TweetTabView
+from .Timeline import Timeline
+from .TweetTab import TweetTab

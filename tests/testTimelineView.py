@@ -1,6 +1,6 @@
 import unittest
 
-from TwitterCLI.views.TimelineView import TimelineView
+from TwitterCLI.views import Timeline
 from TwitterCLI.Tweet import Tweet
 
 # dump colors for ease of use
@@ -8,7 +8,7 @@ import TwitterCLI.colors as colors
 
 class TestTimelineView(unittest.TestCase):
     def test_it_should_render_tweets(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'bla'),
             Tweet('blob', 'haha')
@@ -20,7 +20,7 @@ class TestTimelineView(unittest.TestCase):
         ])
 
     def test_it_should_not_render_lines_outside_screen(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'bla'),
             Tweet('blob', 'haha'),
@@ -30,7 +30,7 @@ class TestTimelineView(unittest.TestCase):
         self.assertEqual(2, len(actual))
 
     def test_repeat_calls_should_print_same_lines(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'bla'),
             Tweet('blob', 'haha')
@@ -40,7 +40,7 @@ class TestTimelineView(unittest.TestCase):
         self.assertEqual(first, second)
 
     def test_it_should_chop_down_long_tweets(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'fooobaar'),
         ]
@@ -51,7 +51,7 @@ class TestTimelineView(unittest.TestCase):
         ])
 
     def test_it_should_display_tweets_at_the_cursor_position(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'bla'),
             Tweet('blob', 'haha')
@@ -62,7 +62,7 @@ class TestTimelineView(unittest.TestCase):
         ])
 
     def test_it_should_treat_negative_cursor_positions_as_zero(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'bla'),
             Tweet('blob', 'haha')
@@ -72,7 +72,7 @@ class TestTimelineView(unittest.TestCase):
         self.assertEqual(zero, negative)
 
     def test_it_should_print_empty_lines_after_any_tweets(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'bla'),
         ]
@@ -83,7 +83,7 @@ class TestTimelineView(unittest.TestCase):
         ])
 
     def test_it_should_right_pad_all_tweets(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'fooobaarno'),
         ]
@@ -96,7 +96,7 @@ class TestTimelineView(unittest.TestCase):
         ])
 
     def test_it_should_color_links_blue(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'foo http://something.xom'),
         ]
@@ -107,7 +107,7 @@ class TestTimelineView(unittest.TestCase):
         ])
 
     def test_it_should_color_mentions_yellow(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'foo @groblem'),
         ]
@@ -118,7 +118,7 @@ class TestTimelineView(unittest.TestCase):
         ])
 
     def test_it_should_color_hashtags(self):
-        view = TimelineView()
+        view = Timeline()
         tweets = [
             Tweet('grob', 'foo #groblem'),
         ]

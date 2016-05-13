@@ -3,8 +3,8 @@ import shutil
 import json
 
 from TwitterCLI.Screen import Screen
-from TwitterCLI.views.TimelineView import TimelineView
-from TwitterCLI.views.TweetTabView import TweetTabView
+from TwitterCLI.views import Timeline
+from TwitterCLI.views import TweetTab
 
 from TwitterCLI.TweetBuilder import TweetBuilder
 
@@ -27,8 +27,8 @@ class TwitterClient:
         self.keyboardEventHandler = KeyboardEventHandler()
 
         self.tweetWindow  = TweetWindow()
-        self.timelineView = TimelineView()
-        self.tweetTabView = TweetTabView()
+        self.timelineView = Timeline()
+        self.tweetTabView = TweetTab()
 
         with open('config/twitter.json') as twitter_config:
             config = json.load(twitter_config)

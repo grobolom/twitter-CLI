@@ -1,11 +1,11 @@
-from TwitterCLI.views.TimelineView import TimelineView
+from TwitterCLI.views import Timeline
 
 class TweetWindow():
     """
     Our first container. Trying this out to better handle passing
     down state through the heirarchy to views that are more complex
     """
-    def __init__(self, view=TimelineView()):
+    def __init__(self, view=Timeline()):
         self.view = view
 
     def render(self, state):

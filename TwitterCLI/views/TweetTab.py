@@ -1,6 +1,6 @@
 import TwitterCLI.colors as colors
 
-class TweetTabView():
+class TweetTab:
     def render(self, state):
         lines = []
 
