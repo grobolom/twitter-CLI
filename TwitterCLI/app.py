@@ -96,7 +96,7 @@ class TwitterClient:
             'lists': lists,
             'last_action': 'none',
         }
-    def _getTweetLists()
+    def _getTweetLists(self):
         lists = {
             'tweets': self.tweetFetcher.getTweets(),
             'home_timeline': self.tweetFetcher.getHomeTimeline(),
