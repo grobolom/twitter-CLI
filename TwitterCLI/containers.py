@@ -1,4 +1,4 @@
-from TwitterCLI.views import Timeline
+from TwitterCLI.views import Timeline, ScrollBar
 
 class TweetWindow():
     """
@@ -23,3 +23,15 @@ class TweetWindow():
         # a good way to decide what size screens should be without
         # hard coding it here in containers
         return self.view.render(tweets, cursor, _w - 21, _h - 1)
+
+class VerticalScrollBar():
+    def __init__(self, view=ScrollBar()):
+        self.view = view
+
+    def render(self, state):
+        height = state['screen_height'] - 1
+        cursor = state['cursor']
+        c_max = state['cursor_max']
+        page = state['screen_height'] - 1
+
+        return self.view.render(height, cursor, c_max, page)
