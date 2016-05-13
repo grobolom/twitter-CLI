@@ -44,3 +44,9 @@ class TestTweetSource(unittest.TestCase):
         self.twitter.lists.list.assert_called_once_with(
             screen_name = 'grob'
         )
+
+    def test_it_should_fetch_home_timeline(self):
+        self.ts.getHomeTimeline()
+        self.twitter.statuses.home_timeline.assert_called_once_with(
+            count = 200
+        )

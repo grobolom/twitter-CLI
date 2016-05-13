@@ -35,3 +35,8 @@ class TweetSource:
             count = 500,
             **params
         )
+
+    def getHomeTimeline(self):
+        return self.twitter.statuses.home_timeline(
+            count = 200
+        )
