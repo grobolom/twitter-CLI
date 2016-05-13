@@ -30,15 +30,8 @@ class TwitterClient:
         self.timelineView = Timeline()
         self.tweetTabView = TweetTab()
 
-        with open('config/twitter.json') as twitter_config:
-            config = json.load(twitter_config)
-        twitter = getTwitter(config)
-        self.tweetSource = TweetSource(config, twitter)
-        self.tweetFetcher = TweetFetcher(self.tweetSource)
-
-        self.state    = self._initialState()
-
     def run(self):
+        self._setupTweetFetcher()
         try:
             self.terminal.enter_fullscreen()
             self._startEventLoop()
@@ -48,6 +41,14 @@ class TwitterClient:
             print(self.terminal.clear)
             print('seeya!')
         return
+
+    def _setupTweetFetcher(self):
+        with open('config/twitter.json') as twitter_config:
+            config = json.load(twitter_config)
+        twitter = getTwitter(config)
+        self.tweetSource = TweetSource(config, twitter)
+        self.tweetFetcher = TweetFetcher(self.tweetSource)
+
 
     def _startEventLoop(self):
         state     = self._initialState()
