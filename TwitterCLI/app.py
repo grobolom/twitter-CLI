@@ -102,4 +102,4 @@ class TwitterClient:
         return self.keyboardEventHandler.getAction(key)
 
     def render(self, state):
-        self.layout.render(terminal, state)
+        self.layout.render(self.terminal, state)
