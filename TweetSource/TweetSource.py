@@ -1,10 +1,7 @@
-from TwitterCLI.TweetBuilder import TweetBuilder
-
 class TweetSource:
     def __init__(self, config, twitter):
         self.config = config
         self.twitter = twitter
-        self.builder = TweetBuilder()
 
     def getNewTweets(self, since=None):
         params = {}
