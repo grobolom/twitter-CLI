@@ -1,0 +1,2 @@
+class ScrollBar:
+    pass
