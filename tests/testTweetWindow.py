@@ -22,4 +22,4 @@ class TestTweetWindow(unittest.TestCase):
         container = TweetWindow()
         actual = container.render(state)
 
-        self.assertEqual(actual, view.render([ self.dummy_tweet ], 0, 59, 19))
+        self.assertEqual(actual, view.render([ self.dummy_tweet ], 0, 58, 19))

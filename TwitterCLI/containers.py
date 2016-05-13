@@ -22,7 +22,7 @@ class TweetWindow():
         # TODO: move this decision making to somewhere up top. We need
         # a good way to decide what size screens should be without
         # hard coding it here in containers
-        return self.view.render(tweets, cursor, _w - 21, _h - 1)
+        return self.view.render(tweets, cursor, _w - 22, _h - 1)
 
 class VerticalScrollBar():
     def __init__(self, view=ScrollBar()):
