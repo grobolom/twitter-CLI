@@ -26,6 +26,11 @@ class TweetSource:
             **params
         )
 
+    def _getLists(self):
+        return self.twitter.lists.list(
+            screen_name = self.config['user']
+        )
+
     def _getListTweets(self, list_name, since=None):
         params = {}
         if since:

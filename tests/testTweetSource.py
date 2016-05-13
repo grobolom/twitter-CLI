@@ -38,3 +38,9 @@ class TestTweetSource(unittest.TestCase):
             count = 500,
             include_rts = False
         )
+
+    def test_it_should_fetch_users_list_names(self):
+        self.ts._getLists()
+        self.twitter.lists.list.assert_called_once_with(
+            screen_name = 'grob'
+        )
