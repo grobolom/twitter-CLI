@@ -2,15 +2,12 @@ import os
 import shutil
 import json
 
-from TwitterCLI.Screen import Screen
-from TwitterCLI.views import Timeline
-from TwitterCLI.views import TweetTab
-
 from TwitterCLI.TweetBuilder import TweetBuilder
 
 from TwitterCLI.reducers import RootReducer
 from TwitterCLI.actions import KeyboardEventHandler
-from TwitterCLI.containers import TweetWindow
+
+from TwitterCLI.layout import AppLayout
 
 from TweetSource.TweetSource import TweetSource
 from TweetSource.modules import TweetFetcher
@@ -21,14 +18,10 @@ from blessed import Terminal
 class TwitterClient:
 
     def __init__(self):
-        self.screen   = Screen()
         self.terminal = Terminal()
         self.reducer  = RootReducer()
         self.keyboardEventHandler = KeyboardEventHandler()
-
-        self.tweetWindow  = TweetWindow()
-        self.timelineView = Timeline()
-        self.tweetTabView = TweetTab()
+        self.layout = AppLayout()
 
     def run(self):
         self._setupTweetFetcher()
@@ -109,12 +102,4 @@ class TwitterClient:
         return self.keyboardEventHandler.getAction(key)
 
     def render(self, state):
-        _w = state['screen_width']
-        _h = state['screen_height']
-
-        self.terminal.move(0, 0)
-        self.screen.render(self.terminal, [
-            (0, 0, self.tweetWindow.render(state)),
-            (_w - 20, 0, self.tweetTabView.render(state)),
-        ])
-        self.terminal.move(0, 0)
+        self.layout.render(terminal, state)
