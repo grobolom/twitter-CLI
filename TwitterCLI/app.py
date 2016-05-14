@@ -86,7 +86,6 @@ class TwitterClient:
             'username': 'grobolom',
             'selected_list': 'tweets',
             'lists': lists,
-            'last_action': 'none',
             'view': 'splash',
         }
 
