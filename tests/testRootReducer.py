@@ -119,3 +119,9 @@ class TestRootReducer(unittest.TestCase):
         }
         state_one = self.rootReducer.reduce(state, action)
         self.assertEqual(state_one['selected_list'], 'list.enemies')
+
+    def test_it_should_switch_views(self):
+        state = { 'view': 'splash' }
+        action = { 'name': 'SWITCH_VIEW', 'target' : 'anotherview' }
+        state = self.rootReducer.reduce(state, action)
+        self.assertEqual(state, { 'view': 'anotherview' })

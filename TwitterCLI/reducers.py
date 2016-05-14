@@ -7,8 +7,14 @@ class RootReducer:
             return self._cursorMove(s, action)
         elif name == 'SWITCH_TAB':
             return self._switchTab(s, action)
+        elif name == 'SWITCH_VIEW':
+            return self._switchView(s, action)
 
         return s
+
+    def _switchView(self, state, action):
+        state['view'] = action['target']
+        return state
 
     def _cursorMove(self, state, action):
         """
