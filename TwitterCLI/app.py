@@ -23,6 +23,8 @@ class TwitterClient:
         self.keyboardEventHandler = KeyboardEventHandler()
         self.layout = AppLayout()
 
+        self.action_queue = []
+
     def run(self):
         self._setupTweetFetcher()
         try:
@@ -64,8 +66,12 @@ class TwitterClient:
         return key
 
     def _handleState(self, key, state):
-        action    = self._actions(key)
-        new_state = self.reducer.reduce(state, action)
+        self.actions_queue += self._actions(key)
+
+        new_state = state.copy()
+        for action in self.action_queue:
+            new_state = self.reducer.reduce(new_state, action)
+        self.action_queue = []
 
         if state != new_state:
             self.render(new_state)
