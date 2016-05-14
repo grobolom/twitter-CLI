@@ -55,7 +55,7 @@ class TwitterClient:
         while True:
             state = self._appendDims(state)
             state = self._handleState(key, state)
-            key = self._handleKey(self.terminal)
+            key   = self._handleKey(self.terminal)
 
     def _handleKey(self, terminal):
         key = ''
@@ -66,7 +66,7 @@ class TwitterClient:
         return key
 
     def _handleState(self, key, state):
-        self.actions_queue += self._actions(key)
+        self.action_queue += [ self._actions(key) ]
 
         new_state = state.copy()
         for action in self.action_queue:
