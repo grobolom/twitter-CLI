@@ -80,7 +80,6 @@ class TwitterClient:
 
     def _initialState(self):
         lists = self._getTweetLists()
-
         return {
             'cursor': 0,
             'cursor_max': 200,
@@ -89,6 +88,7 @@ class TwitterClient:
             'lists': lists,
             'last_action': 'none',
         }
+
     def _getTweetLists(self):
         lists = {
             'tweets': self.tweetFetcher.getTweets(),
