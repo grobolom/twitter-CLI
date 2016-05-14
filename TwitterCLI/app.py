@@ -95,7 +95,7 @@ class TwitterClient:
             'home_timeline': self.tweetFetcher.getHomeTimeline(),
         }
         for _list in self.tweetFetcher.getLists():
-            lists[ _list ] = self.tweetFetcher.getListTweets(_list)
+            lists[ 'list.' + _list ] = self.tweetFetcher.getListTweets(_list)
         return lists
 
     def _actions(self, key):
