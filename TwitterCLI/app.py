@@ -92,7 +92,7 @@ class TwitterClient:
             'username': 'grobolom',
             'selected_list': 'tweets',
             'lists': lists,
-            'view': 'splash',
+            'view': 'default',
         }
 
     def _getTweetLists(self):
