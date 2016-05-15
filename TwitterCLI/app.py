@@ -6,12 +6,17 @@ from blessed import Terminal
 
 class TwitterClient:
 
-    def __init__(self, q):
-        self.terminal = Terminal()
-        self.reducer  = RootReducer()
+    def __init__(self,
+            q,
+            reducer=RootReducer(),
+            layout=AppLayout(),
+            terminal=Terminal()
+    ):
         self.keyboardEventHandler = KeyboardEventHandler()
-        self.layout = AppLayout()
 
+        self.terminal = terminal
+        self.layout = layout
+        self.reducer = reducer
         self.q = q
 
     def run(self):
