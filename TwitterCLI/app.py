@@ -23,11 +23,9 @@ class TwitterClient:
         self.keyboardEventHandler = KeyboardEventHandler()
         self.layout = AppLayout()
 
-        self.action_queue = []
         self.q = q
 
     def run(self):
-        self._setupTweetFetcher()
         try:
             self.terminal.enter_fullscreen()
             self._startEventLoop()
@@ -37,14 +35,6 @@ class TwitterClient:
             print(self.terminal.clear)
             print('seeya!')
         return
-
-    def _setupTweetFetcher(self):
-        with open('config/twitter.json') as twitter_config:
-            config = json.load(twitter_config)
-        twitter = getTwitter(config)
-        self.tweetSource = TweetSource(config, twitter)
-        self.tweetFetcher = TweetFetcher(self.tweetSource)
-
 
     def _startEventLoop(self):
         state     = self._initialState()
@@ -67,6 +57,14 @@ class TwitterClient:
         return key
 
     def _handleState(self, key, state):
+        """
+        where we handle our state and actions. There's a bit of a complexity
+        here because we have to handle both key inputs and actions passed to
+        us in the queue. I've decided the best way to do this is to
+        prioritize key actions over everything else, and do other updates
+        only when we have time to process them - otherwise we have really
+        slow visual updates when processing key input
+        """
         new_state = state.copy()
 
         if key:
@@ -92,24 +90,14 @@ class TwitterClient:
         return state
 
     def _initialState(self):
-        lists = self._getTweetLists()
         return {
             'cursor': 0,
             'cursor_max': 200,
             'username': 'grobolom',
             'selected_list': 'tweets',
-            'lists': lists,
+            'lists': [],
             'view': 'default',
         }
-
-    def _getTweetLists(self):
-        lists = {
-            'tweets': self.tweetFetcher.getTweets(),
-            'home_timeline': self.tweetFetcher.getHomeTimeline(),
-        }
-        for _list in self.tweetFetcher.getLists():
-            lists[ 'list.' + _list ] = self.tweetFetcher.getListTweets(_list)
-        return lists
 
     def _actions(self, key):
         return self.keyboardEventHandler.getAction(key)
