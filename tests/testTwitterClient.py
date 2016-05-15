@@ -17,7 +17,6 @@ class TestTwitterClient(unittest.TestCase):
         l = Mock()
         t = Mock()
         self.tc = TwitterClient(self.q, reducer=r, layout=l, terminal=t)
-        self.tc.render = Mock()
 
     def test_it_should_process_an_action_from_the_queue(self):
         self.q.put({ 'name': 'SWITCH_TAB' })
@@ -32,3 +31,8 @@ class TestTwitterClient(unittest.TestCase):
 
         actual = self.tc._handleState('KEY_TAB', state)
         self.assertEqual(actual, { 'last_action': 'SWITCH_TAB' })
+
+    def test_it_should_render_the_layout(self):
+        self.tc.render({ 'baconus': 'bacon' })
+        self.tc.layout.render.assert_called_once_with(
+            self.tc.terminal, { 'baconus': 'bacon' })
