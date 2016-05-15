@@ -17,13 +17,14 @@ from blessed import Terminal
 
 class TwitterClient:
 
-    def __init__(self):
+    def __init__(self, q):
         self.terminal = Terminal()
         self.reducer  = RootReducer()
         self.keyboardEventHandler = KeyboardEventHandler()
         self.layout = AppLayout()
 
         self.action_queue = []
+        self.q = q
 
     def run(self):
         self._setupTweetFetcher()
@@ -66,15 +67,23 @@ class TwitterClient:
         return key
 
     def _handleState(self, key, state):
-        self.action_queue += [ self._actions(key) ]
+        key_action = self._actions(key)
 
         new_state = state.copy()
-        for action in self.action_queue:
+        action = None
+        try:
+            action = self.q.get(block=False)
+        except:
+            pass
+
+        if action:
             new_state = self.reducer.reduce(new_state, action)
-        self.action_queue = []
 
         if state != new_state:
             self.render(new_state)
+
+        if key_action:
+            self.q.put(key_action)
 
         return new_state
 

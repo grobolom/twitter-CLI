@@ -1,8 +1,10 @@
 import shutil
+from queue import Queue
 from TwitterCLI.app import TwitterClient
 
 def main():
-    app = TwitterClient()
+    q = Queue()
+    app = TwitterClient(q)
     app.run()
     return
 
