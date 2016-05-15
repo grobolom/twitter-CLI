@@ -10,15 +10,9 @@ class MockReducer:
         s['last_action'] = action['name']
         return s
 
-class MockQueue:
-    def put(self, item):
-        self.item = item
-    def get(self, block=False):
-        return self.item
-
 class TestTwitterClient(unittest.TestCase):
     def test_it_should_process_an_action_from_the_queue(self):
-        q = MockQueue()
+        q = Queue()
         q.put({ 'name': 'SWITCH_TAB' })
 
         r = MockReducer()
@@ -32,7 +26,7 @@ class TestTwitterClient(unittest.TestCase):
         self.assertEqual(actual, { 'last_action': 'SWITCH_TAB' })
 
     def test_it_should_prioritize_keyboard_actions(self):
-        q = MockQueue()
+        q = Queue()
         q.put({ 'name': 'SOMETHING' })
 
         r = MockReducer()
