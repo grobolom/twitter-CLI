@@ -67,22 +67,21 @@ class TwitterClient:
         return key
 
     def _handleState(self, key, state):
-        key_action = self._actions(key)
-        if key_action:
-            self.q.put(key_action)
-
         new_state = state.copy()
-        action = None
-        try:
-            action = self.q.get(block=False)
-        except:
-            pass
+
+        if key:
+            action = self._actions(key)
+        else:
+            action = None
+            try:
+                action = self.q.get(block=False)
+            except:
+                pass
 
         if action:
             new_state = self.reducer.reduce(new_state, action)
-
-        if state != new_state:
-            self.render(new_state)
+            if state != new_state:
+                self.render(new_state)
 
         return new_state
 
