@@ -61,13 +61,15 @@ class TwitterClient:
     def _handleKey(self, terminal):
         key = ''
         with self.terminal.cbreak():
-            key = self.terminal.inkey(timeout = 1)
+            key = self.terminal.inkey(timeout = 0.1)
         if key.is_sequence:
             key = key.name
         return key
 
     def _handleState(self, key, state):
         key_action = self._actions(key)
+        if key_action:
+            self.q.put(key_action)
 
         new_state = state.copy()
         action = None
@@ -81,9 +83,6 @@ class TwitterClient:
 
         if state != new_state:
             self.render(new_state)
-
-        if key_action:
-            self.q.put(key_action)
 
         return new_state
 

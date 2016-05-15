@@ -6,9 +6,10 @@ from time import sleep
 from threading import Thread
 
 def move_tab_later(q):
-    sleep(10)
-    action = { 'name': 'SWITCH_TAB' }
-    q.put(action)
+    while True:
+        sleep(2)
+        action = { 'name': 'SWITCH_TAB' }
+        q.put(action)
 
 def main():
     q = Queue()
