@@ -3,7 +3,6 @@ from TweetSource.modules import TweetFetcher
 from TweetSource.utils import getTwitter
 
 import json
-from time import sleep
 
 def main(client_queue):
     with open('config/twitter.json') as twitter_config:
