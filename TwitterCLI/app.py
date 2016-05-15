@@ -1,18 +1,7 @@
-import os
 import shutil
-import json
-
-from TwitterCLI.TweetBuilder import TweetBuilder
-
 from TwitterCLI.reducers import RootReducer
 from TwitterCLI.actions import KeyboardEventHandler
-
 from TwitterCLI.layout import AppLayout
-
-from TweetSource.TweetSource import TweetSource
-from TweetSource.modules import TweetFetcher
-from TweetSource.utils import getTwitter
-
 from blessed import Terminal
 
 class TwitterClient:
