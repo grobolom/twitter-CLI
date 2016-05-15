@@ -11,30 +11,24 @@ class MockReducer:
         return s
 
 class TestTwitterClient(unittest.TestCase):
-    def test_it_should_process_an_action_from_the_queue(self):
-        q = Queue()
-        q.put({ 'name': 'SWITCH_TAB' })
-
+    def setUp(self):
+        self.q = Queue()
         r = MockReducer()
         l = Mock()
         t = Mock()
-        tc = TwitterClient(q, reducer=r, layout=l, terminal=t)
-        tc.render = Mock()
+        self.tc = TwitterClient(self.q, reducer=r, layout=l, terminal=t)
+        self.tc.render = Mock()
 
+    def test_it_should_process_an_action_from_the_queue(self):
+        self.q.put({ 'name': 'SWITCH_TAB' })
         state = { 'last_action': 'None' }
-        actual = tc._handleState(None, state)
+
+        actual = self.tc._handleState(None, state)
         self.assertEqual(actual, { 'last_action': 'SWITCH_TAB' })
 
     def test_it_should_prioritize_keyboard_actions(self):
-        q = Queue()
-        q.put({ 'name': 'SOMETHING' })
-
-        r = MockReducer()
-        l = Mock()
-        t = Mock()
-        tc = TwitterClient(q, reducer=r, layout=l, terminal=t)
-        tc.render = Mock()
-
+        self.q.put({ 'name': 'SOMETHING' })
         state = { 'last_action': 'None' }
-        actual = tc._handleState('KEY_TAB', state)
+
+        actual = self.tc._handleState('KEY_TAB', state)
         self.assertEqual(actual, { 'last_action': 'SWITCH_TAB' })
