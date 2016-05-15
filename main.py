@@ -1,19 +1,14 @@
-import shutil
-from queue import Queue
 from TwitterCLI.app import TwitterClient
+from TweetSource.app import main as ts_func
 
 from time import sleep
 from threading import Thread
+from queue import Queue
 
-def move_tab_later(q):
-    while True:
-        sleep(2)
-        action = { 'name': 'SWITCH_TAB' }
-        q.put(action)
 
 def main():
     q = Queue()
-    t = Thread(target=move_tab_later, args=(q,))
+    t = Thread(target=ts_func, args=(q,))
     t.daemon = True
     t.start()
 
