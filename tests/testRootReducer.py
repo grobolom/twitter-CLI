@@ -125,3 +125,17 @@ class TestRootReducer(unittest.TestCase):
         action = { 'name': 'SWITCH_VIEW', 'target' : 'anotherview' }
         state = self.rootReducer.reduce(state, action)
         self.assertEqual(state, { 'view': 'anotherview' })
+
+    def test_it_should_add_a_list_of_tweets(self):
+        state = { 'lists': {} }
+        action = {
+            'name': 'NEW_TWEETS',
+            'tweets': [{}],
+            'list': 'friends',
+        }
+        state = self.rootReducer.reduce(state, action)
+        self.assertEqual(state, {
+            'lists': {
+                'friends': [{}]
+            }
+        })

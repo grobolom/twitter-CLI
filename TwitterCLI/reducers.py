@@ -9,6 +9,8 @@ class RootReducer:
             return self._switchTab(s, action)
         elif name == 'SWITCH_VIEW':
             return self._switchView(s, action)
+        elif name == 'NEW_TWEETS':
+            return self._addTweets(s, action)
 
         return s
 
@@ -50,6 +52,14 @@ class RootReducer:
             state['selected_list'] = lists[next_index]
         else:
             state['selected_list'] = lists[0]
+
+        return state
+
+    def _addTweets(self, state, action):
+        list_name = action['list']
+        tweets = action['tweets']
+
+        state['lists'][ list_name ] = tweets
 
         return state
 
