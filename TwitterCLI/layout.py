@@ -35,8 +35,10 @@ def splashView(state):
 def mainView(state):
     w = state['screen_width']
     h = state['screen_height']
+    cursor = state['cursor']
+    c_max = state['cursor_max']
     return [
         (0     , 0, TweetWindow().render(state)),
-        (w - 21, 0, ScrollBar().render(state)),
+        (w - 21, 0, ScrollBar().render(h, cursor, c_max, h)),
         (w - 20, 0, TweetTab().render(state)),
     ]
