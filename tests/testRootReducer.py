@@ -139,3 +139,26 @@ class TestRootReducer(unittest.TestCase):
                 'friends': [{}]
             }
         })
+
+    def test_it_should_append_new_tweets(self):
+        state = {
+            'lists': {
+                'friends': [
+                    { 'text' : 'first_tweet' },
+                ]
+            }
+        }
+        action = {
+            'name': 'NEW_TWEETS',
+            'tweets': [ { 'text': 'second_tweet' } ],
+            'list': 'friends',
+        }
+        state = self.rootReducer.reduce(state, action)
+        self.assertEqual(state, {
+            'lists': {
+                'friends': [
+                    { 'text' : 'first_tweet' },
+                    { 'text' : 'second_tweet' },
+                ]
+            }
+        })

@@ -59,7 +59,10 @@ class RootReducer:
         list_name = action['list']
         tweets = action['tweets']
 
-        state['lists'][ list_name ] = tweets
+        if list_name not in state['lists']:
+            state['lists'][ list_name ] = []
+
+        state['lists'][ list_name ] += tweets
 
         return state
 
