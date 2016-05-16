@@ -60,8 +60,6 @@ class TwitterClient:
         only when we have time to process them - otherwise we have really
         slow visual updates when processing key input
         """
-        new_state = copy.deepcopy(state)
-
         if key:
             action = self._actions(key)
         else:
@@ -71,6 +69,7 @@ class TwitterClient:
             except:
                 pass
 
+        new_state = state
         if action:
             new_state = self.reducer.reduce(new_state, action)
             if state != new_state:
