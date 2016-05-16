@@ -10,8 +10,13 @@ class TestVerticalScrollBar(unittest.TestCase):
 
         state = {
             'screen_height': 20,
-            'cursor': 50,
-            'cursor_max': 520,
+            'selected_list': 'tweets',
+            'lists': {
+                'tweets': {
+                    'cursor': 50,
+                    'cursor_max': 520,
+                }
+            }
         }
         actual = container.render(state)
         expected = view.render(19, 50, 520, 19)

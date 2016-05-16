@@ -3,7 +3,6 @@ from TwitterCLI.containers import TweetWindow
 from TwitterCLI.containers import VerticalScrollBar
 
 from TwitterCLI.views import TweetTab
-from TwitterCLI.views import ScrollBar
 from TwitterCLI.views import SplashScreen
 
 class AppLayout():
@@ -40,12 +39,8 @@ class AppLayout():
     def mainView(self, state):
         w = state['screen_width']
         h = state['screen_height']
-        selected = state['selected_list']
-        s_list = state['lists'][ selected ]
-        cursor = s_list['cursor']
-        c_max  = s_list['cursor_max']
         return [
             (0     , 0, TweetWindow().render(state)),
-            (w - 21, 0, ScrollBar().render(h - 1, cursor, c_max, h - 1)),
+            (w - 21, 0, VerticalScrollBar().render(state)),
             (w - 20, 0, TweetTab().render(state)),
         ]

@@ -30,8 +30,11 @@ class VerticalScrollBar():
 
     def render(self, state):
         height = state['screen_height'] - 1
-        cursor = state['cursor']
-        c_max = state['cursor_max']
         page = state['screen_height'] - 1
+
+        selected = state['lists'][ state['selected_list'] ]
+
+        cursor = selected['cursor']
+        c_max = selected['cursor_max']
 
         return self.view.render(height, cursor, c_max, page)
