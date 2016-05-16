@@ -1,6 +1,8 @@
+import copy
+
 class RootReducer:
     def reduce(self, state, action):
-        s = state.copy()
+        s = copy.deepcopy(state)
 
         name = action['name']
         if name == 'CURSOR_MOVE':

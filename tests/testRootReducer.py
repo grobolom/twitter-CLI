@@ -162,3 +162,19 @@ class TestRootReducer(unittest.TestCase):
                 ]
             }
         })
+
+    def test_it_should_not_shallow_copy_state(self):
+        state = {
+            'lists': {
+                'friends': [
+                    { 'text' : 'first_tweet' },
+                ]
+            }
+        }
+        action = {
+            'name': 'NEW_TWEETS',
+            'tweets': [ { 'text': 'second_tweet' } ],
+            'list': 'friends',
+        }
+        new_state = self.rootReducer.reduce(state, action)
+        self.assertNotEqual(state, new_state)
