@@ -12,6 +12,7 @@ class TestAppLayout(unittest.TestCase):
         state = {
             'screen_width': 40,
             'screen_height': 20,
+            'lists': { 'tweets': [] },
             'view': 'random',
         }
         self.al.splashView = Mock()
@@ -25,6 +26,7 @@ class TestAppLayout(unittest.TestCase):
         state = {
             'screen_width': 40,
             'screen_height': 20,
+            'lists': { 'tweets': [] },
             'view': 'splash',
         }
         self.al.splashView = Mock()
@@ -38,6 +40,7 @@ class TestAppLayout(unittest.TestCase):
         state = {
             'screen_width': 40,
             'screen_height': 20,
+            'lists': { 'tweets': [] },
             'view': 'splash',
         }
         self.assertEqual(len(self.al.splashView(state)), 1)
@@ -47,9 +50,26 @@ class TestAppLayout(unittest.TestCase):
             'screen_width': 40,
             'screen_height': 20,
             'selected_list': '',
-            'lists': {},
+            'lists': { 'tweets': [] },
             'cursor': 0,
             'cursor_max': 20,
             'view': 'splash',
         }
         self.assertEqual(len(self.al.mainView(state)), 3)
+
+    def test_it_should_display_the_splash_screen_if_tweets_not_loaded(self):
+        state = {
+            'screen_width': 40,
+            'screen_height': 20,
+            'selected_list': '',
+            'lists': {},
+            'cursor': 0,
+            'cursor_max': 20,
+            'view': 'list',
+        }
+        self.al.splashView = Mock()
+        self.al.mainView   = Mock()
+        self.al.render(self.term, state)
+
+        self.assertEqual(self.al.mainView.call_count, 0)
+        self.assertEqual(self.al.splashView.call_count, 1)

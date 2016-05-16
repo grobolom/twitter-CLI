@@ -15,7 +15,7 @@ class AppLayout():
         _h = state['screen_height']
 
         terminal.move(0, 0)
-        if state['view'] == 'splash':
+        if state['view'] == 'splash' or state['lists'] == {} :
             self.screen.render(terminal, self.splashView(state))
         else:
             self.screen.render(terminal, self.mainView(state))
