@@ -1,6 +1,7 @@
 import unittest
 import time
-from mock import MagicMock as Mock
+
+from mock import MagicMock as Mock, patch
 from queue import Queue
 from TwitterCLI.app import TwitterClient
 
@@ -45,3 +46,9 @@ class TestTwitterClient(unittest.TestCase):
     def test_it_should_return_a_default_state_with_no_tweets(self):
         state = self.tc._initialState()
         assert state['lists'] == {}
+
+    @patch('shutil.get_terminal_size', lambda: [80, 20])
+    def test_it_should_append_terminal_dims_to_state(self):
+        state = {}
+        state = self.tc._appendDims(state)
+        assert state == { 'screen_width': 80, 'screen_height': 20 }
