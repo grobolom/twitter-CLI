@@ -1,4 +1,5 @@
 import shutil
+import copy
 from TwitterCLI.reducers import RootReducer
 from TwitterCLI.actions import KeyboardEventHandler
 from TwitterCLI.layout import AppLayout
@@ -59,7 +60,7 @@ class TwitterClient:
         only when we have time to process them - otherwise we have really
         slow visual updates when processing key input
         """
-        new_state = state.copy()
+        new_state = copy.deepcopy(state)
 
         if key:
             action = self._actions(key)
