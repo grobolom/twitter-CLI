@@ -45,8 +45,9 @@ class TwitterClient:
 
     def _handleKey(self, terminal):
         key = ''
-        with self.terminal.cbreak():
-            key = self.terminal.inkey(timeout = 0.1)
+        with terminal.cbreak():
+            key = terminal.inkey(timeout = 0.1)
+
         if key.is_sequence:
             key = key.name
         return key

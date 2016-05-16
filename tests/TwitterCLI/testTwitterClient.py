@@ -52,3 +52,17 @@ class TestTwitterClient(unittest.TestCase):
         state = {}
         state = self.tc._appendDims(state)
         assert state == { 'screen_width': 80, 'screen_height': 20 }
+
+    def test_it_should_get_a_key_input(self):
+        self.tc._handleKey(self.tc.terminal)
+        self.tc.terminal.inkey.assert_called_once_with(timeout = 0.1)
+
+    def test_it_should_convert_complex_key_inputs(self):
+        keypress = Mock()
+        keypress.is_sequence = True
+        keypress.name = 'Mock Keypress'
+
+        self.tc.terminal.inkey = Mock(return_value=keypress)
+        result = self.tc._handleKey(self.tc.terminal)
+
+        assert result == 'Mock Keypress'
