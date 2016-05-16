@@ -46,6 +46,6 @@ class AppLayout():
         c_max  = s_list['cursor_max']
         return [
             (0     , 0, TweetWindow().render(state)),
-            (w - 21, 0, ScrollBar().render(h, cursor, c_max, h)),
+            (w - 21, 0, ScrollBar().render(h - 1, cursor, c_max, h - 1)),
             (w - 20, 0, TweetTab().render(state)),
         ]
