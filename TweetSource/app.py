@@ -1,5 +1,5 @@
-from TweetSource.TweetSource import TweetSource
-from TweetSource.modules import TweetFetcher
+from TweetSource import TwitterWrapper
+from TweetSource import TweetFetcher
 from TweetSource.utils import getTwitter
 
 import json

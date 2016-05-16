@@ -1,4 +1,4 @@
-class TweetSource:
+class TwitterWrapper:
     def __init__(self, config, twitter):
         self.config = config
         self.twitter = twitter

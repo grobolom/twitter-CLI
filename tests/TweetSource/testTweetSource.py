@@ -1,9 +1,9 @@
 import unittest
 from mock import MagicMock as Mock
 
-from TweetSource.TweetSource import TweetSource
+from TweetSource import TwitterWrapper
 
-class TestTweetSource(unittest.TestCase):
+class TestTwitterWrapper(unittest.TestCase):
     """
     these tests seem bad to me right now because we are testing the private
     api instead of the public
@@ -12,7 +12,7 @@ class TestTweetSource(unittest.TestCase):
         self.twitter = Mock()
         self.mongodb = Mock()
         self.config = { 'user' : 'grob' }
-        self.ts = TweetSource(self.config, self.twitter)
+        self.ts = TwitterWrapper(self.config, self.twitter)
 
     def test_it_should_fetch_latest_tweets_from_twitter(self):
         self.ts.getNewTweets(since=800)

@@ -1,7 +1,7 @@
 import unittest
 from mock import MagicMock as Mock
 
-from TweetSource.modules import TweetFetcher
+from TweetSource import TweetFetcher
 
 class TestTweetFetcher(unittest.TestCase):
     def setUp(self):
