@@ -8,7 +8,7 @@ def main(client_queue):
     with open('config/twitter.json') as twitter_config:
         config = json.load(twitter_config)
     twitter = getTwitter(config)
-    tweetSource = TweetSource(config, twitter)
+    tweetSource = TwitterWrapper(config, twitter)
     tweetFetcher = TweetFetcher(tweetSource)
 
     getAllTweets(client_queue, tweetFetcher)
