@@ -45,7 +45,7 @@ class TestAppLayout(unittest.TestCase):
             'lists': { 'tweets': [] },
             'view': 'splash',
         }
-        self.assertEqual(len(self.al.splashView(state)), 1)
+        assert len(self.al.splashView(state)) == 1
 
     def test_it_should_render_the_main_view(self):
         state = {
@@ -61,7 +61,7 @@ class TestAppLayout(unittest.TestCase):
             },
             'view': 'splash',
         }
-        self.assertEqual(len(self.al.mainView(state)), 3)
+        assert len(self.al.mainView(state)) == 3
 
     def test_it_should_display_the_splash_screen_if_tweets_not_loaded(self):
         state = {
@@ -77,5 +77,5 @@ class TestAppLayout(unittest.TestCase):
         self.al.mainView   = Mock()
         self.al.render(self.term, state)
 
-        self.assertEqual(self.al.mainView.call_count, 0)
-        self.assertEqual(self.al.splashView.call_count, 1)
+        assert self.al.mainView.call_count   == 0
+        assert self.al.splashView.call_count == 1
