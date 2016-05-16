@@ -5,10 +5,20 @@ from time import sleep
 from threading import Thread
 from queue import Queue
 
+import json
+from TweetSource import TweetFetcher
+from TweetSource.utils import getTwitter
+from TweetSource import TwitterWrapper
 
 def main():
+    with open('config/twitter.json') as twitter_config:
+        config = json.load(twitter_config)
+    twitter = getTwitter(config)
+    tweetSource = TwitterWrapper(config, twitter)
+    tweetFetcher = TweetFetcher(tweetSource)
+
     q = Queue()
-    t = Thread(target=ts_func, args=(q,))
+    t = Thread(target=ts_func, args=(q, tweetFetcher))
     t.daemon = True
     t.start()
 

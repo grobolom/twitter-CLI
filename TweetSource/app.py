@@ -1,16 +1,4 @@
-from TweetSource import TwitterWrapper
-from TweetSource import TweetFetcher
-from TweetSource.utils import getTwitter
-
-import json
-
-def main(client_queue):
-    with open('config/twitter.json') as twitter_config:
-        config = json.load(twitter_config)
-    twitter = getTwitter(config)
-    tweetSource = TwitterWrapper(config, twitter)
-    tweetFetcher = TweetFetcher(tweetSource)
-
+def main(client_queue, tweetFetcher):
     getAllTweets(client_queue, tweetFetcher)
 
 def getAllTweets(queue, tweetFetcher):
