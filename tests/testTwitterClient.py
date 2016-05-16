@@ -32,6 +32,11 @@ class TestTwitterClient(unittest.TestCase):
         actual = self.tc._handleState('KEY_TAB', state)
         self.assertEqual(actual, { 'last_action': 'SWITCH_TAB' })
 
+    def test_it_should_not_render_when_state_is_the_same(self):
+        state = {}
+        actual = self.tc._handleState(None, state)
+        self.tc.layout.render.assert_not_called()
+
     def test_it_should_render_the_layout(self):
         self.tc.render({ 'baconus': 'bacon' })
         self.tc.layout.render.assert_called_once_with(
