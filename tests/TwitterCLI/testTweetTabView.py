@@ -31,8 +31,8 @@ class TestTweetTabView(unittest.TestCase):
             colors.title('TwitterCLI          '),
             colors.user( '@grobolom           '),
             '                    ',
-            '  Tweets            ',
             '  Home Timeline     ',
+            '  Tweets            ',
         ])
 
     def test_it_should_render_lists(self):
@@ -51,8 +51,8 @@ class TestTweetTabView(unittest.TestCase):
             colors.title('TwitterCLI          '),
             colors.user( '@grobolom           '),
             '                    ',
-            '  Tweets            ',
             '  Home Timeline     ',
+            '  Tweets            ',
             '    Friends         ',
             '    Other List      ',
         ])

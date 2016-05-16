@@ -36,8 +36,8 @@ class TweetTab:
 
     def _listOrder(self, state):
         order = [
-            'tweets',
             'home_timeline',
+            'tweets',
         ]
 
         other_lists = []

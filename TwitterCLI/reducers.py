@@ -78,10 +78,10 @@ class RootReducer:
         keys = state['lists'].keys()
 
         order = []
-        if 'tweets' in keys:
-            order += [ 'tweets' ]
         if 'home_timeline' in keys:
             order += [ 'home_timeline' ]
+        if 'tweets' in keys:
+            order += [ 'tweets' ]
 
         other_lists = []
         for key in keys:
