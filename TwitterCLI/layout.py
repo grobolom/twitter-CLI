@@ -14,12 +14,12 @@ class AppLayout():
         _w = state['screen_width']
         _h = state['screen_height']
 
-        terminal.move(0, 0)
 
         selected = state['selected_list']
         view     = state['view']
         lists    = state['lists']
 
+        terminal.move(0, 0)
         if view == 'splash' or lists == {} or selected not in lists :
             self.screen.render(terminal, self.splashView(state))
         else:
