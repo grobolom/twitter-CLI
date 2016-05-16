@@ -41,3 +41,7 @@ class TestTwitterClient(unittest.TestCase):
         self.tc.render({ 'baconus': 'bacon' })
         self.tc.layout.render.assert_called_once_with(
             self.tc.terminal, { 'baconus': 'bacon' })
+
+    def test_it_should_return_a_default_state_with_no_tweets(self):
+        state = self.tc._initialState()
+        assert state['lists'] == {}
