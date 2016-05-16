@@ -7,7 +7,16 @@ twitter-cli:
         - .:/app
     links:
         - db
+
 db:
     image: mongo:3.0
     ports:
         - "27017:27017"
+    volumes_from:
+        - mongo_data
+    command: --smallfiles
+
+mongo_data:
+    image: mongo:3.0
+    volumes:
+        - /data/db
