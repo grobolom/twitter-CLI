@@ -20,7 +20,7 @@ class AppLayout():
         lists    = state['lists']
 
         terminal.move(0, 0)
-        if view == 'splash' or lists == {} or selected not in lists :
+        if view == 'splash' or lists == {} or selected not in lists.keys() :
             self.screen.render(terminal, self.splashView(state))
         else:
             self.screen.render(terminal, self.mainView(state))
