@@ -19,8 +19,8 @@ class TestAppLayout(unittest.TestCase):
         }
         self.al.render(self.term, state)
 
-        self.al.mainView.assert_called_once()
-        self.al.splashView.assert_not_called()
+        assert self.al.mainView.call_count   == 1
+        assert self.al.splashView.call_count == 0
 
     def test_it_should_show_the_splash_screen(self):
         state = {
@@ -30,6 +30,6 @@ class TestAppLayout(unittest.TestCase):
         }
         self.al.render(self.term, state)
 
-        self.al.mainView.assert_not_called()
-        self.al.splashView.assert_called_once()
+        assert self.al.mainView.call_count   == 0
+        assert self.al.splashView.call_count == 1
 
