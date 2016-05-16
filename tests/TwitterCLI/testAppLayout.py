@@ -79,3 +79,21 @@ class TestAppLayout(unittest.TestCase):
 
         assert self.al.mainView.call_count   == 0
         assert self.al.splashView.call_count == 1
+
+    def test_it_should_display_splash_if_selected_list_does_not_exist(self):
+        state = {
+            'screen_width': 40,
+            'screen_height': 20,
+            'selected_list': 'home_timeline',
+            'lists': { 'tweets': [] },
+            'cursor': 0,
+            'cursor_max': 20,
+            'view': 'list',
+        }
+        self.al.splashView = Mock()
+        self.al.mainView   = Mock()
+        self.al.render(self.term, state)
+
+        assert self.al.mainView.call_count   == 0
+        assert self.al.splashView.call_count == 1
+
