@@ -12,6 +12,7 @@ class TestAppLayout(unittest.TestCase):
         state = {
             'screen_width': 40,
             'screen_height': 20,
+            'selected_list': 'tweets',
             'lists': { 'tweets': [] },
             'view': 'random',
         }
@@ -26,6 +27,7 @@ class TestAppLayout(unittest.TestCase):
         state = {
             'screen_width': 40,
             'screen_height': 20,
+            'selected_list': 'tweets',
             'lists': { 'tweets': [] },
             'view': 'splash',
         }
