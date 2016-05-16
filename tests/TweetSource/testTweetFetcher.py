@@ -15,6 +15,7 @@ class TestTweetFetcher(unittest.TestCase):
         ]
 
         self.source = Mock()
+        self.db     = Mock()
         self.source.getNewTweets    = Mock(return_value=fakeTweets)
         self.source.getListTweets   = Mock(return_value=fakeTweets)
         self.source.getHomeTimeline = Mock(return_value=fakeTweets)
@@ -22,7 +23,7 @@ class TestTweetFetcher(unittest.TestCase):
             { "name": "friends" },
             { "name": "enemies" }
         ])
-        self.tf = TweetFetcher(self.source)
+        self.tf = TweetFetcher(self.source, self.db)
 
     def test_it_should_return_tweets(self):
         result = self.tf.getTweets()

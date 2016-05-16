@@ -2,6 +2,7 @@ twitter
 readchar
 blessed
 jsonpickle
+pymongo
 
 # testing stuff
 pytest

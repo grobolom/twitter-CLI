@@ -2,8 +2,9 @@ from TwitterCLI.TweetBuilder import TweetBuilder
 import json
 
 class TweetFetcher:
-    def __init__(self, source):
+    def __init__(self, source, db):
         self.source = source
+        self.db = db
         self.builder = TweetBuilder()
 
     def getTweets(self):
