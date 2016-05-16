@@ -49,10 +49,14 @@ class TestAppLayout(unittest.TestCase):
         state = {
             'screen_width': 40,
             'screen_height': 20,
-            'selected_list': '',
-            'lists': { 'tweets': [] },
-            'cursor': 0,
-            'cursor_max': 20,
+            'selected_list': 'tweets',
+            'lists': {
+                'tweets': {
+                    'tweets': [],
+                    'cursor': 0,
+                    'cursor_max': 20,
+                },
+            },
             'view': 'splash',
         }
         self.assertEqual(len(self.al.mainView(state)), 3)

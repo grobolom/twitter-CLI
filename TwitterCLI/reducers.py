@@ -29,10 +29,12 @@ class RootReducer:
         """
 
         amount     = action['amount']
-        cursor     = state['cursor'] + amount
-        cursor_max = state['cursor_max']
+        c_list     = state['lists'][ state['selected_list'] ]
+        cursor     = c_list['cursor'] + amount
+        cursor_max = c_list['cursor_max']
 
-        state['cursor'] = sorted([0, cursor, cursor_max])[1]
+        state['lists'][ state['selected_list'] ]['cursor'] = \
+            sorted([0, cursor, cursor_max])[1]
 
         return state
 
@@ -62,9 +64,13 @@ class RootReducer:
         tweets = action['tweets']
 
         if list_name not in state['lists']:
-            state['lists'][ list_name ] = []
+            state['lists'][ list_name ] = {
+                'tweets': [],
+                'cursor': 0,
+                'cursor_max': len(tweets)
+            }
 
-        state['lists'][ list_name ] += tweets
+        state['lists'][ list_name ]['tweets'] += tweets
 
         return state
 

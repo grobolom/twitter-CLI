@@ -11,11 +11,11 @@ class TweetWindow():
     def render(self, state):
         _w            = state['screen_width']
         _h            = state['screen_height']
-        cursor        = state['cursor']
         selected_list = state['selected_list']
+        cursor        = state['lists'][ selected_list ]['cursor']
 
         if selected_list in state['lists']:
-            tweets = state['lists'][ selected_list ]
+            tweets = state['lists'][ selected_list ]['tweets']
         else:
             tweets = []
 

@@ -18,51 +18,71 @@ class TestRootReducer(unittest.TestCase):
 
     def test_scrolls_cursor_down(self):
         state = {
-            'cursor' : 0,
-            'cursor_max' : 20,
+            'selected_list': 'friends',
+            'lists': {
+                'friends': {
+                    'cursor' : 0,
+                    'cursor_max' : 20,
+                }
+            }
         }
         action = {
             'name' : 'CURSOR_MOVE',
             'amount' : 1,
         }
         state = self.rootReducer.reduce(state, action)
-        self.assertEqual(state['cursor'], 1)
+        self.assertEqual(state['lists']['friends']['cursor'], 1)
 
     def test_stops_cursor_scrolling_past_end_of_page(self):
         state = {
-            'cursor' : 20,
-            'cursor_max' : 20,
+            'selected_list': 'friends',
+            'lists': {
+                'friends': {
+                    'cursor' : 20,
+                    'cursor_max' : 20,
+                }
+            }
         }
         action = {
             'name' : 'CURSOR_MOVE',
             'amount' : 1,
         }
         state = self.rootReducer.reduce(state, action)
-        self.assertEqual(state['cursor'], 20)
+        self.assertEqual(state['lists']['friends']['cursor'], 20)
 
     def test_scrolls_cursor_up(self):
         state = {
-            'cursor' : 10,
-            'cursor_max' : 20,
+            'selected_list': 'friends',
+            'lists': {
+                'friends': {
+                    'cursor' : 10,
+                    'cursor_max' : 20,
+                }
+            }
         }
         action = {
             'name' : 'CURSOR_MOVE',
             'amount' : -1,
         }
         state = self.rootReducer.reduce(state, action)
-        self.assertEqual(state['cursor'], 9)
+        self.assertEqual(state['lists']['friends']['cursor'], 9)
 
     def test_stops_cursor_scrolling_above_top_of_page(self):
         state = {
-            'cursor' : 0,
-            'cursor_max' : 20,
+            'selected_list': 'friends',
+            'lists': {
+                'friends': {
+                    'cursor' : 0,
+                    'cursor_max' : 20,
+                }
+            }
         }
         action = {
             'name' : 'CURSOR_MOVE',
             'amount' : -1,
         }
         state = self.rootReducer.reduce(state, action)
-        self.assertEqual(state['cursor'], 0)
+        self.assertEqual(state['lists']['friends']['cursor'], 0)
 
     def test_it_should_switch_lists_on_tab(self):
         state = {
@@ -130,22 +150,26 @@ class TestRootReducer(unittest.TestCase):
         state = { 'lists': {} }
         action = {
             'name': 'NEW_TWEETS',
-            'tweets': [{}],
+            'tweets': [ {} ],
             'list': 'friends',
         }
         state = self.rootReducer.reduce(state, action)
         self.assertEqual(state, {
             'lists': {
-                'friends': [{}]
+                'friends': {
+                    'tweets': [ {} ],
+                    'cursor': 0,
+                    'cursor_max': 1,
+                }
             }
         })
 
     def test_it_should_append_new_tweets(self):
         state = {
             'lists': {
-                'friends': [
-                    { 'text' : 'first_tweet' },
-                ]
+                'friends': {
+                    'tweets': [ { 'text' : 'first_tweet' } ],
+                }
             }
         }
         action = {
@@ -156,19 +180,21 @@ class TestRootReducer(unittest.TestCase):
         state = self.rootReducer.reduce(state, action)
         self.assertEqual(state, {
             'lists': {
-                'friends': [
-                    { 'text' : 'first_tweet' },
-                    { 'text' : 'second_tweet' },
-                ]
+                'friends': {
+                    'tweets': [
+                        { 'text' : 'first_tweet' },
+                        { 'text' : 'second_tweet' },
+                    ]
+                }
             }
         })
 
     def test_it_should_not_shallow_copy_state(self):
         state = {
             'lists': {
-                'friends': [
-                    { 'text' : 'first_tweet' },
-                ]
+                'friends': {
+                    'tweets': [ { 'text' : 'first_tweet' } ],
+                }
             }
         }
         action = {

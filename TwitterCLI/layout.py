@@ -35,8 +35,10 @@ class AppLayout():
     def mainView(self, state):
         w = state['screen_width']
         h = state['screen_height']
-        cursor = state['cursor']
-        c_max = state['cursor_max']
+        selected = state['selected_list']
+        s_list = state['lists'][ selected ]
+        cursor = s_list['cursor']
+        c_max  = s_list['cursor_max']
         return [
             (0     , 0, TweetWindow().render(state)),
             (w - 21, 0, ScrollBar().render(h, cursor, c_max, h)),

@@ -13,10 +13,13 @@ class TestTweetWindow(unittest.TestCase):
         state = {
             'screen_width': 80,
             'screen_height': 20,
-            'cursor' : 0,
             'selected_list' : 'somelist',
             'lists': {
-                'somelist': [ self.dummy_tweet ]
+                'somelist': {
+                    'tweets': [ self.dummy_tweet ],
+                    'cursor': 0,
+                    'cursor_max': 20,
+                }
             },
         }
         container = TweetWindow()
