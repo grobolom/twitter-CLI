@@ -89,7 +89,7 @@ class TwitterClient:
             'cursor': 0,
             'cursor_max': 200,
             'username': 'grobolom',
-            'selected_list': 'tweets',
+            'selected_list': 'home_timeline',
             'lists': {},
             'view': 'default',
         }
