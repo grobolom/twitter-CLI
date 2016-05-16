@@ -11,19 +11,22 @@ def main(client_queue):
     tweetSource = TweetSource(config, twitter)
     tweetFetcher = TweetFetcher(tweetSource)
 
-    client_queue.put({
+    getAllTweets(client_queue, tweetFetcher)
+
+def getAllTweets(queue, tweetFetcher):
+    queue.put({
         'name': 'NEW_TWEETS',
         'list': 'tweets',
         'tweets': tweetFetcher.getTweets()
     })
-    client_queue.put({
+    queue.put({
         'name': 'NEW_TWEETS',
         'list': 'home_timeline',
         'tweets': tweetFetcher.getHomeTimeline()
     })
     lists = tweetFetcher.getLists()
     for _list in lists:
-        client_queue.put({
+        queue.put({
             'name': 'NEW_TWEETS',
             'list': 'list.' + _list,
             'tweets': tweetFetcher.getListTweets(_list)
