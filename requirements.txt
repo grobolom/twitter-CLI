@@ -1,7 +1,8 @@
 twitter
 readchar
 blessed
+jsonpickle
 
 # testing stuff
-nose
+pytest
 coverage
