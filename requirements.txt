@@ -5,4 +5,6 @@ jsonpickle
 
 # testing stuff
 pytest
+pytest-watch
+pytest-cov
 coverage
