@@ -52,20 +52,17 @@ class TestTweetFetcher(unittest.TestCase):
     def test_it_should_return_tweets(self):
         self.msource.getNewTweets = Mock(return_value=None)
         result = self.tf.getTweets()
-        self.assertEqual([ result[0].author, result[0].text ],
-            [ 'grobolom', 'something' ])
+        assert [result[0].author, result[0].text] == ['grobolom','something']
 
     def test_it_should_return_a_home_timeline(self):
         self.msource.getHomeTimeline = Mock(return_value=None)
         result = self.tf.getHomeTimeline()
-        self.assertEqual([ result[0].author, result[0].text ],
-            [ 'grobolom', 'something' ])
+        assert [result[0].author, result[0].text] == ['grobolom','something']
 
     def test_it_should_return_lists(self):
         result = self.tf.getLists()
-        self.assertEqual(result, [ 'friends', 'enemies' ])
+        assert result == ['friends','enemies']
 
     def test_it_should_return_list_tweets(self):
         result = self.tf.getListTweets('friends')
-        self.assertEqual([ result[0].author, result[0].text ],
-            [ 'grobolom', 'something' ])
+        assert [result[0].author, result[0].text] == ['grobolom','something']
