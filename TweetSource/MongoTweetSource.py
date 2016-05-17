@@ -26,11 +26,12 @@ class MongoTweetSource:
             return lists
         return None
 
-    def saveLists(self, tweets):
-        self.db.list_names.insert(tweets)
+    def saveLists(self, lists):
+        self.db.list_names.insert(lists)
 
-    def getListTweets(self):
-        tweets = self.db.lists.find().sort("id", -1).limit(100)
+    def getListTweets(self, list_name):
+        tweets = self.db.lists.find({'slug':list_name}) \
+                .sort("id", -1).limit(100)
         if tweets.count(with_limit_and_skip=True):
             return tweets
         return None
