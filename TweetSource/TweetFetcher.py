@@ -7,7 +7,7 @@ class TweetFetcher:
         self.mongo_source = mongo_source
         self.builder = TweetBuilder()
 
-    def getTweets(self):
+    def getTweets(self, since=None):
         tweets = self.mongo_source.getNewTweets()
         if not tweets:
             tweets = self.source.getNewTweets()
