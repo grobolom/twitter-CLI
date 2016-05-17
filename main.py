@@ -1,3 +1,6 @@
+import traceback
+import os
+
 from TwitterCLI.app import TwitterClient
 from TwitterCLI.reducers import RootReducer
 from TweetSource.app import main as ts_func
@@ -38,8 +41,9 @@ def main():
 
         app = TwitterClient(q, reducer=reducer)
         app.run()
-    except:
-        pass
+    except Exception as e:
+        os.system('clear')
+        traceback.print_exc()
     finally:
         mongo.close()
     return
