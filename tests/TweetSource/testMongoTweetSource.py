@@ -32,8 +32,8 @@ class TestMongoTweetSource(unittest.TestCase):
         assert self.db.list_names.insert.call_count == 1
 
     def test_it_should_fetch_list_tweets(self):
-        self.mts.getListTweets()
-        assert self.db.lists.find.call_count == 1
+        self.mts.getListTweets('friends')
+        self.db.lists.find.assert_called_once_with({'slug': 'friends'})
 
     def test_it_should_save_list_tweets(self):
         self.mts.saveListTweets([{ 'user': 'grob' }])

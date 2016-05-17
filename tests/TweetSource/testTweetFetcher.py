@@ -62,9 +62,11 @@ class TestTweetFetcher(unittest.TestCase):
         assert self.msource.saveHomeTimeline.call_count == 1
 
     def test_it_should_return_lists(self):
+        self.msource.getLists = Mock(return_value=None)
         result = self.tf.getLists()
         assert result == ['friends','enemies']
 
     def test_it_should_return_list_tweets(self):
+        self.msource.getListTweets = Mock(return_value=None)
         result = self.tf.getListTweets('friends')
         assert [result[0].author, result[0].text] == ['grobolom','something']
