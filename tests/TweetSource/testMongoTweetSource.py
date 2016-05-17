@@ -22,3 +22,19 @@ class TestMongoTweetSource(unittest.TestCase):
     def test_it_should_save_home_timeline(self):
         self.mts.saveHomeTimeline([{ 'user': 'grob' }])
         assert self.db.home_timeline.insert.call_count == 1
+
+    def test_it_should_fetch_the_list_names(self):
+        self.mts.getLists()
+        assert self.db.list_names.find.call_count == 1
+
+    def test_it_should_save_the_list_names(self):
+        self.mts.saveLists([{ 'name': 'friends' }])
+        assert self.db.list_names.insert.call_count == 1
+
+    def test_it_should_fetch_list_tweets(self):
+        self.mts.getListTweets()
+        assert self.db.lists.find.call_count == 1
+
+    def test_it_should_save_list_tweets(self):
+        self.mts.saveListTweets([{ 'user': 'grob' }])
+        assert self.db.lists.insert.call_count == 1

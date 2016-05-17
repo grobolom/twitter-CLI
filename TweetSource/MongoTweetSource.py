@@ -19,3 +19,21 @@ class MongoTweetSource:
 
     def saveHomeTimeline(self, tweets):
         self.db.home_timeline.insert(tweets)
+
+    def getLists(self):
+        lists = self.db.list_names.find()
+        if lists.count():
+            return lists
+        return None
+
+    def saveLists(self, tweets):
+        self.db.list_names.insert(tweets)
+
+    def getListTweets(self):
+        tweets = self.db.lists.find().sort("id", -1).limit(100)
+        if tweets.count(with_limit_and_skip=True):
+            return tweets
+        return None
+
+    def saveListTweets(self, tweets):
+        self.db.lists.insert(tweets)
