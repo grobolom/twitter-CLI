@@ -72,3 +72,13 @@ class TestTwitterClient(unittest.TestCase):
         self.tc.run()
         assert self.tc.terminal.enter_fullscreen.call_count == 1
         assert self.tc.terminal.exit_fullscreen.call_count == 1
+
+    def test_it_should_fail_gracefully_from_on_close(self):
+        e = KeyboardInterrupt()
+        mockLoop = Mock()
+        mockLoop.side_effect = e
+        self.tc._startEventLoop = mockLoop
+
+        self.tc.run()
+        assert self.tc.terminal.enter_fullscreen.call_count == 1
+        assert self.tc.terminal.exit_fullscreen.call_count == 1
