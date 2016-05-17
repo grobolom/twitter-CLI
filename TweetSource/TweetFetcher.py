@@ -2,13 +2,15 @@ from TwitterCLI.TweetBuilder import TweetBuilder
 import json
 
 class TweetFetcher:
-    def __init__(self, source, db):
+    def __init__(self, source, mongo_source):
         self.source = source
-        self.db = db
+        self.mongo_source = mongo_source
         self.builder = TweetBuilder()
 
     def getTweets(self):
-        tweets = self.source.getNewTweets()
+        tweets = self.mongo_source.getNewTweets()
+        if not tweets:
+            tweets = self.source.getNewTweets()
         return self.builder.buildTweets(tweets)
 
     def getLists(self):

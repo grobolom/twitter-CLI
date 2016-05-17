@@ -14,8 +14,7 @@ class TestTweetFetcher(unittest.TestCase):
             }
         ]
 
-        self.source = Mock()
-        self.db     = Mock()
+        self.source  = Mock()
         self.source.getNewTweets    = Mock(return_value=fakeTweets)
         self.source.getListTweets   = Mock(return_value=fakeTweets)
         self.source.getHomeTimeline = Mock(return_value=fakeTweets)
@@ -23,9 +22,24 @@ class TestTweetFetcher(unittest.TestCase):
             { "name": "friends" },
             { "name": "enemies" }
         ])
-        self.tf = TweetFetcher(self.source, self.db)
+
+        self.msource = Mock()
+
+        self.tf = TweetFetcher(self.source, self.msource)
+
+    def test_it_should_get_mongo_tweets_first(self):
+        mongo_tweets = [{
+            'user': {
+                'screen_name': 'wut'
+            },
+            'text': 'nothing'
+        }]
+        self.msource.getNewTweets = Mock(return_value=mongo_tweets)
+        result = self.tf.getTweets()
+        assert [result[0].author, result[0].text] == ['wut', 'nothing']
 
     def test_it_should_return_tweets(self):
+        self.msource.getNewTweets = Mock(return_value=None)
         result = self.tf.getTweets()
         self.assertEqual([ result[0].author, result[0].text ],
             [ 'grobolom', 'something' ])
