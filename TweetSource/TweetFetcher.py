@@ -8,16 +8,16 @@ class TweetFetcher:
         self.builder = TweetBuilder()
 
     def getTweets(self, since=None):
-        tweets = self.mongo_source.getNewTweets()
+        tweets = self.mongo_source.getNewTweets(since)
         if not tweets:
-            tweets = self.source.getNewTweets()
+            tweets = self.source.getNewTweets(since)
             self.mongo_source.saveTweets(tweets)
         return self.builder.buildTweets(tweets)
 
-    def getHomeTimeline(self):
-        tweets = self.mongo_source.getHomeTimeline()
+    def getHomeTimeline(self, since=None):
+        tweets = self.mongo_source.getHomeTimeline(since)
         if not tweets:
-            tweets = self.source.getHomeTimeline()
+            tweets = self.source.getHomeTimeline(since)
             self.mongo_source.saveHomeTimeline(tweets)
         return self.builder.buildTweets(tweets)
 
@@ -28,10 +28,10 @@ class TweetFetcher:
             self.mongo_source.saveLists(lists)
         return [ e['name'] for e in lists ]
 
-    def getListTweets(self, list_name):
-        tweets = self.mongo_source.getListTweets(list_name)
+    def getListTweets(self, list_name, since=None):
+        tweets = self.mongo_source.getListTweets(list_name, since)
         if not tweets:
-            tweets = self.source.getListTweets(list_name)
+            tweets = self.source.getListTweets(list_name, since)
             self.mongo_source.saveListTweets(tweets)
         return self.builder.buildTweets(tweets)
 
