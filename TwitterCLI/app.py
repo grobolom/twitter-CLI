@@ -62,7 +62,7 @@ class TwitterClient:
         slow visual updates when processing key input
         """
         if key:
-            action = self._actions(key)
+            action = self._actions(key, state)
         else:
             action = None
             try:
@@ -94,8 +94,8 @@ class TwitterClient:
             'view': 'default',
         }
 
-    def _actions(self, key):
-        return self.keyboardEventHandler.getAction(key)
+    def _actions(self, key, state):
+        return self.keyboardEventHandler.getAction(key, state)
 
     def render(self, state):
         self.layout.render(self.terminal, state)
