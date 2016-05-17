@@ -32,16 +32,13 @@ class TwitterClient:
         return
 
     def _startEventLoop(self):
-        state     = self._initialState()
-        key       = ''
-
-        self.terminal.enter_fullscreen()
+        state = self._initialState()
         state = self._appendDims(state)
         self.render(state)
         while True:
+            key   = self._handleKey(self.terminal)
             state = self._appendDims(state)
             state = self._handleState(key, state)
-            key   = self._handleKey(self.terminal)
 
     def _handleKey(self, terminal):
         key = ''
