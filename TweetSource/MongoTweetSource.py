@@ -3,13 +3,19 @@ class MongoTweetSource:
         self.db = db
 
     def getNewTweets(self):
-        return self.db.tweets.find().sort("id").limit(100)
+        tweets = self.db.tweets.find().sort("id", -1).limit(100)
+        if tweets.count(with_limit_and_skip=True):
+            return tweets
+        return None
 
     def saveTweets(self, tweets):
         self.db.tweets.insert(tweets)
 
     def getHomeTimeline(self):
-        return self.db.home_timeline.find().sort("id").limit(100)
+        tweets = self.db.home_timeline.find().sort("id", -1).limit(100)
+        if tweets.count(with_limit_and_skip=True):
+            return tweets
+        return None
 
     def saveHomeTimeline(self, tweets):
         self.db.home_timeline.insert(tweets)
