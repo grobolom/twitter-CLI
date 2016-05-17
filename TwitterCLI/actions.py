@@ -18,8 +18,8 @@ class KeyboardEventHandler:
 
     def _getTweets(self, state):
         selected_list = state['selected_list']
-        current = state['lists'][ selected_list ]
+        tweets = state['lists'][ selected_list ]['tweets']
         return {
             'name': 'GET_TWEETS',
-            'since': current[0]['id'],
+            'since': tweets[0]._id,
         }

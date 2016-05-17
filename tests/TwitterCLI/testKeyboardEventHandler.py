@@ -1,6 +1,7 @@
 import unittest
 
 from TwitterCLI.actions import KeyboardEventHandler
+from TwitterCLI import Tweet
 
 class TestKeyboardEventHandler(unittest.TestCase):
     def test_it_should_map_cursor_events(self):
@@ -19,12 +20,14 @@ class TestKeyboardEventHandler(unittest.TestCase):
         handler = KeyboardEventHandler()
         key = 'KEY_ENTER'
         state = {
-            'selected_list': 'tweets',
+            'selected_list': 'bacon',
             'lists': {
-                'tweets': [
-                    { 'id': 800 },
-                    { 'id': 500 },
-                ],
+                'bacon': {
+                    'tweets': [
+                        Tweet('', '', _id=800),
+                        Tweet('', '', _id=500),
+                    ]
+                },
             }
         }
         actual = handler.getAction(key, state)

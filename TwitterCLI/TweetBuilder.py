@@ -26,9 +26,13 @@ class TweetBuilder:
         return result
 
     def _buildTweetFromObject(self, tweet):
-        print(tweet)
         author = tweet['user']['screen_name']
         text = re.sub(r'[^\x00-\x7f]', r'.', html.unescape(tweet['text']))
         text = text.replace('\n', ' ')
-        return Tweet(author, text)
+
+        _id = None
+        if 'id' in tweet:
+            _id  = tweet['id']
+
+        return Tweet(author, text, _id=_id)
 
