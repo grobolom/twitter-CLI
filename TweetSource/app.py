@@ -12,7 +12,6 @@ def getAllTweets(queue, tweetFetcher):
         'list': 'home_timeline',
         'tweets': tweetFetcher.getHomeTimeline()
     })
-    """
     lists = tweetFetcher.getLists()
     for _list in lists:
         queue.put({
@@ -20,4 +19,3 @@ def getAllTweets(queue, tweetFetcher):
             'list': 'list.' + _list,
             'tweets': tweetFetcher.getListTweets(_list)
         })
-    """
