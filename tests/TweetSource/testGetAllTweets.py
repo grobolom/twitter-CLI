@@ -11,5 +11,5 @@ class TestAllTweets():
 
         assert tf.getTweets.call_count == 1
         assert tf.getHomeTimeline.call_count == 1
-        # assert tf.getLists.call_count == 1
-        # assert tf.getListTweets.call_count == 2
+        assert tf.getLists.call_count == 1
+        assert tf.getListTweets.call_count == 2
