@@ -11,7 +11,7 @@ class TwitterWrapper:
         return self.twitter.statuses.user_timeline(
             screen_name = self.config['user'],
             include_rts = False,
-            count = 500,
+            count = 200,
             **params
         )
 
@@ -29,11 +29,16 @@ class TwitterWrapper:
             slug=list_name,
             owner_screen_name = self.config['user'],
             include_rts = False,
-            count = 500,
+            count = 200,
             **params
         )
 
-    def getHomeTimeline(self):
+    def getHomeTimeline(self, since=None):
+        params = {}
+        if since:
+            params['since'] = since
+
         return self.twitter.statuses.home_timeline(
-            count = 200
+            count = 200,
+            **params
         )

@@ -18,7 +18,7 @@ class TestTwitterWrapper(unittest.TestCase):
         self.ts.getNewTweets(since=800)
         self.twitter.statuses.user_timeline.assert_called_once_with(
             screen_name = 'grob',
-            count = 500,
+            count = 200,
             include_rts = False,
             since = 800
         )
@@ -26,7 +26,7 @@ class TestTwitterWrapper(unittest.TestCase):
         self.ts.getNewTweets()
         self.twitter.statuses.user_timeline.assert_called_once_with(
             screen_name = 'grob',
-            count = 500,
+            count = 200,
             include_rts = False
         )
 
@@ -35,7 +35,7 @@ class TestTwitterWrapper(unittest.TestCase):
         self.twitter.lists.statuses.assert_called_once_with(
             slug = 'friends',
             owner_screen_name = 'grob',
-            count = 500,
+            count = 200,
             include_rts = False
         )
 
