@@ -1,4 +1,5 @@
 ![TwitterCLI main screen](https://i.imgur.com/Rw9P4F7.png)
+![TwitterCLI architecture](https://i.imgur.com/I4p8Ql9.png)
 
 # TwitterCLI
 [![Codecov](https://img.shields.io/codecov/c/github/grobolom/TwitterCLI.svg)](https://codecov.io/gh/grobolom/TwitterCLI)
