@@ -53,11 +53,13 @@ class TestTweetFetcher(unittest.TestCase):
         self.msource.getNewTweets = Mock(return_value=None)
         result = self.tf.getTweets()
         assert [result[0].author, result[0].text] == ['grobolom','something']
+        assert self.msource.saveTweets.call_count == 1
 
     def test_it_should_return_a_home_timeline(self):
         self.msource.getHomeTimeline = Mock(return_value=None)
         result = self.tf.getHomeTimeline()
         assert [result[0].author, result[0].text] == ['grobolom','something']
+        assert self.msource.saveHomeTimeline.call_count == 1
 
     def test_it_should_return_lists(self):
         result = self.tf.getLists()

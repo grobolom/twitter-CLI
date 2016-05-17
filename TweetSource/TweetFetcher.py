@@ -11,12 +11,14 @@ class TweetFetcher:
         tweets = self.mongo_source.getNewTweets()
         if not tweets:
             tweets = self.source.getNewTweets()
+            self.mongo_source.saveTweets(tweets)
         return self.builder.buildTweets(tweets)
 
     def getHomeTimeline(self):
         tweets = self.mongo_source.getHomeTimeline()
         if not tweets:
             tweets = self.source.getHomeTimeline()
+            self.mongo_source.saveHomeTimeline(tweets)
         return self.builder.buildTweets(tweets)
 
     def getLists(self):
