@@ -61,7 +61,7 @@ class TestAppLayout(unittest.TestCase):
             },
             'view': 'splash',
         }
-        assert len(self.al.mainView(state)) == 3
+        assert len(self.al.mainView(state)) == 4
 
     def test_it_should_display_the_splash_screen_if_tweets_not_loaded(self):
         state = {

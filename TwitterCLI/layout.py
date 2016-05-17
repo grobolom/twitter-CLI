@@ -43,4 +43,5 @@ class AppLayout():
             (0     , 0, TweetWindow().render(state)),
             (w - 21, 0, VerticalScrollBar().render(state)),
             (w - 20, 0, TweetTab().render(state)),
+            (0,     10, ['>'])
         ]
