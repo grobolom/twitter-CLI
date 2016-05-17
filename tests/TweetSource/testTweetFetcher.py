@@ -38,9 +38,26 @@ class TestTweetFetcher(unittest.TestCase):
         result = self.tf.getTweets()
         assert [result[0].author, result[0].text] == ['wut', 'nothing']
 
+    def test_it_should_get_mongo_home_timeline_first(self):
+        mongo_tweets = [{
+            'user': {
+                'screen_name': 'wut'
+            },
+            'text': 'nothing'
+        }]
+        self.msource.getHomeTimeline = Mock(return_value=mongo_tweets)
+        result = self.tf.getHomeTimeline()
+        assert [result[0].author, result[0].text] == ['wut', 'nothing']
+
     def test_it_should_return_tweets(self):
         self.msource.getNewTweets = Mock(return_value=None)
         result = self.tf.getTweets()
+        self.assertEqual([ result[0].author, result[0].text ],
+            [ 'grobolom', 'something' ])
+
+    def test_it_should_return_a_home_timeline(self):
+        self.msource.getHomeTimeline = Mock(return_value=None)
+        result = self.tf.getHomeTimeline()
         self.assertEqual([ result[0].author, result[0].text ],
             [ 'grobolom', 'something' ])
 
@@ -50,10 +67,5 @@ class TestTweetFetcher(unittest.TestCase):
 
     def test_it_should_return_list_tweets(self):
         result = self.tf.getListTweets('friends')
-        self.assertEqual([ result[0].author, result[0].text ],
-            [ 'grobolom', 'something' ])
-
-    def test_it_should_return_a_home_timeline(self):
-        result = self.tf.getHomeTimeline()
         self.assertEqual([ result[0].author, result[0].text ],
             [ 'grobolom', 'something' ])
