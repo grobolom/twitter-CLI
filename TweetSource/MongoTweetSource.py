@@ -7,3 +7,9 @@ class MongoTweetSource:
 
     def saveTweets(self, tweets):
         self.db.tweets.insert(tweets)
+
+    def getHomeTimeline(self):
+        return self.db.home_timeline.find().sort("id").limit(100)
+
+    def saveHomeTimeline(self, tweets):
+        self.db.home_timeline.insert(tweets)

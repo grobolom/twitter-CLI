@@ -14,3 +14,11 @@ class TestMongoTweetSource(unittest.TestCase):
     def test_it_should_save_tweets_to_mongo(self):
         self.mts.saveTweets([{ 'user': 'grob' }])
         assert self.db.tweets.insert.call_count == 1
+
+    def test_it_should_fetch_the_home_timeline_from_mongo(self):
+        self.mts.getHomeTimeline()
+        assert self.db.home_timeline.find.call_count == 1
+
+    def test_it_should_save_home_timeline(self):
+        self.mts.saveHomeTimeline([{ 'user': 'grob' }])
+        assert self.db.home_timeline.insert.call_count == 1
