@@ -20,4 +20,4 @@ def getAllTweets(queue, tweetFetcher):
             'list': 'list.' + _list,
             'tweets': tweetFetcher.getListTweets(_list)
         })
-    ""
+    """
