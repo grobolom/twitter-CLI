@@ -33,8 +33,6 @@ class TwitterClient:
 
     def _startEventLoop(self):
         state = self._initialState()
-        state = self._appendDims(state)
-        self.render(state)
         while True:
             key   = self._handleKey(self.terminal)
             state = self._appendDims(state)
