@@ -1,5 +1,5 @@
 import unittest
-
+from mock import MagicMock as Mock
 from TwitterCLI.reducers import RootReducer
 
 class TestRootReducer(unittest.TestCase):
@@ -204,3 +204,15 @@ class TestRootReducer(unittest.TestCase):
         }
         new_state = self.rootReducer.reduce(state, action)
         self.assertNotEqual(state, new_state)
+
+    def test_it_should_run_middlewares(self):
+        state = {}
+        action = {
+            'name': 'INVALID_ACTION123',
+        }
+        middleware = Mock()
+        middlewares = [ middleware ]
+        reducer = RootReducer(middlewares=middlewares)
+        reducer.reduce(state, action)
+
+        middleware.handleAction.assert_called_once_with(state, action)

@@ -1,8 +1,14 @@
 import copy
 
 class RootReducer:
+    def __init__(self, middlewares=None):
+        self.middlewares = []
+        if middlewares:
+            self.middlewares = middlewares
+
     def reduce(self, state, action):
         s = copy.deepcopy(state)
+        s = self._callMiddlewares(s, action)
 
         name = action['name']
         if name == 'CURSOR_MOVE':
@@ -15,6 +21,12 @@ class RootReducer:
             return self._addTweets(s, action)
 
         return s
+
+    def _callMiddlewares(self, state, action):
+        ns = state
+        for middleware in self.middlewares:
+            ns = middleware.handleAction(ns, action)
+        return ns
 
     def _switchView(self, state, action):
         state['view'] = action['target']
