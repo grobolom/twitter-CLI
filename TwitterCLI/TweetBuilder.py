@@ -26,6 +26,7 @@ class TweetBuilder:
         return result
 
     def _buildTweetFromObject(self, tweet):
+        print(tweet)
         author = tweet['user']['screen_name']
         text = re.sub(r'[^\x00-\x7f]', r'.', html.unescape(tweet['text']))
         text = text.replace('\n', ' ')

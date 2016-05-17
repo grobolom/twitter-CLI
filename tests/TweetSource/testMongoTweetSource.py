@@ -33,7 +33,7 @@ class TestMongoTweetSource(unittest.TestCase):
 
     def test_it_should_fetch_list_tweets(self):
         self.mts.getListTweets('friends')
-        self.db.lists.find.assert_called_once_with({'slug': 'friends'}, {})
+        self.db.lists.find.assert_called_once_with({'slug': 'friends'})
 
     def test_it_should_save_list_tweets(self):
         self.mts.saveListTweets([{ 'user': 'grob' }])

@@ -7,7 +7,7 @@ class MongoTweetSource:
         if since:
             params['since'] = { '$gt': since }
 
-        tweets = self.db.tweets.find({}, params).sort("id", -1).limit(100)
+        tweets = self.db.tweets.find(params).sort("id", -1).limit(100)
         if tweets.count(with_limit_and_skip=True):
             return tweets
         return None
@@ -20,7 +20,7 @@ class MongoTweetSource:
         if since:
             params['since'] = { '$gt': since }
 
-        tweets = self.db.home_timeline.find({}, params).sort("id", -1).limit(100)
+        tweets = self.db.home_timeline.find(params).sort("id", -1).limit(100)
         if tweets.count(with_limit_and_skip=True):
             return tweets
         return None
@@ -38,12 +38,11 @@ class MongoTweetSource:
         self.db.list_names.insert(lists)
 
     def getListTweets(self, list_name, since=None):
-        find = { 'slug': list_name }
-        params = {}
+        params = { 'slug': list_name }
         if since:
             params['since'] = { '$gt': since }
 
-        tweets = self.db.lists.find(find, params).sort("id", -1).limit(100)
+        tweets = self.db.lists.find(params).sort("id", -1).limit(100)
         if tweets.count(with_limit_and_skip=True):
             return tweets
         return None
