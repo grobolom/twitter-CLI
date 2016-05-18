@@ -8,10 +8,8 @@ def echoer():
 @asyncio.coroutine
 def reader(some_queue):
     while True:
-        loop = asyncio.get_event_loop()
-        future = loop.run_in_executor(None, echoer)
-        x = yield from future
-        yield from some_queue.put(x)
+        yield from asyncio.sleep(1)
+        yield from some_queue.put('bacon')
 
 @asyncio.coroutine
 def terminal_process(some_queue):
