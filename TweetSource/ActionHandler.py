@@ -10,4 +10,8 @@ class ActionHandler:
             return self._getTweets(action)
 
     def _getTweets(self, action):
-        return self.tf.getTweets(since=action['since'])
+        return {
+            'name': 'NEW_TWEETS',
+            'list': 'tweets',
+            'tweets': self.tf.getTweets(since=action['since']),
+        }

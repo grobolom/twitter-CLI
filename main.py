@@ -3,7 +3,7 @@ import os
 
 from TwitterCLI.app import TwitterClient
 from TwitterCLI.reducers import RootReducer
-from TweetSource.app import main as ts_func
+from TweetSource.app import TweetSource as TweetSource
 from TwitterCLI.middleware import TweetSourceMiddleware
 
 from time import sleep
@@ -30,14 +30,16 @@ def main():
         mongoSource = MongoTweetSource(db)
         tweetFetcher = TweetFetcher(tweetSource, mongoSource)
 
-        outq = Queue()
-        middlewares = [ TweetSourceMiddleware(outq) ]
+        out_q = Queue()
+        middlewares = [ TweetSourceMiddleware(out_q) ]
         reducer = RootReducer(middlewares=middlewares)
-
         q = Queue()
-        t = Thread(target=ts_func, args=(q, tweetFetcher))
-        t.daemon = True
-        t.start()
+
+#        ts = TweetSource(q, out_q, tweetFetcher)
+
+#        t = Thread(target=ts.run)
+#        t.daemon = True
+#        t.start()
 
         app = TwitterClient(q, reducer=reducer)
         app.run()
