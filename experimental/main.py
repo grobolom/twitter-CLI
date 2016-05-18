@@ -6,7 +6,7 @@ from blessed import Terminal
 def inputter():
     term = Terminal()
     with term.cbreak():
-        key = term.inkey()
+        key = term.inkey(1)
         return key
 
 @asyncio.coroutine
@@ -15,7 +15,8 @@ def reader(some_queue):
         loop = asyncio.get_event_loop()
         future = loop.run_in_executor(None, inputter)
         x = yield from future
-        yield from some_queue.put(x)
+        if x and not x.is_sequence:
+            yield from some_queue.put(x)
 
 @asyncio.coroutine
 def terminal_process(some_queue):
@@ -33,7 +34,6 @@ def main():
     finally:
         loop.close()
         x = some_queue.get()
-        print(x)
     pass
 
 if __name__ == "__main__":
