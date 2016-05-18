@@ -1,33 +1,35 @@
-from blessed import Terminal
 import asyncio
 import time
-from queue import Queue
-from concurrent.futures import ProcessPoolExecutor
 
 def echoer():
     time.sleep(1)
     return 'bacon'
 
 @asyncio.coroutine
-def terminal_process(some_queue):
+def reader(some_queue):
     while True:
         loop = asyncio.get_event_loop()
         future = loop.run_in_executor(None, echoer)
         x = yield from future
+        yield from some_queue.put(x)
+
+@asyncio.coroutine
+def terminal_process(some_queue):
+    asyncio.async(reader(some_queue))
+    while True:
+        x = yield from some_queue.get()
         print(x)
 
 def main():
     loop = asyncio.get_event_loop()
     some_queue = asyncio.Queue()
-    asyncio.async(terminal_process(some_queue))
 
     try:
-        loop.run_forever()
-    except:
-        loop.stop()
+        loop.run_until_complete(terminal_process(some_queue))
     finally:
         loop.close()
-        print('!' + some_queue.get_nowait())
+        x = some_queue.get()
+        print(x)
     pass
 
 if __name__ == "__main__":
