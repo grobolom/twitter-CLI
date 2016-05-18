@@ -1,15 +1,21 @@
 import asyncio
 import time
 
-def echoer():
-    time.sleep(1)
-    return 'bacon'
+from blessed import Terminal
+
+def inputter():
+    term = Terminal()
+    with term.cbreak():
+        key = term.inkey()
+        return key
 
 @asyncio.coroutine
 def reader(some_queue):
     while True:
-        yield from asyncio.sleep(1)
-        yield from some_queue.put('bacon')
+        loop = asyncio.get_event_loop()
+        future = loop.run_in_executor(None, inputter)
+        x = yield from future
+        yield from some_queue.put(x)
 
 @asyncio.coroutine
 def terminal_process(some_queue):
