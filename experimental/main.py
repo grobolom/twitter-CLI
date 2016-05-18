@@ -19,8 +19,14 @@ def reader(some_queue):
             yield from some_queue.put(x)
 
 @asyncio.coroutine
+def something_slow(some_queue):
+    yield from asyncio.sleep(10)
+    yield from some_queue.put('WHAT')
+
+@asyncio.coroutine
 def terminal_process(some_queue):
     asyncio.async(reader(some_queue))
+    asyncio.async(something_slow(some_queue))
     while True:
         x = yield from some_queue.get()
         print(x)
