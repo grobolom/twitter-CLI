@@ -1,9 +1,11 @@
+
 import traceback
 import os
 
 from TwitterCLI.app import TwitterClient
 from TwitterCLI.reducers import RootReducer
 from TweetSource.app import TweetSource as TweetSource
+from TweetSource.app import main as ts_func
 from TwitterCLI.middleware import TweetSourceMiddleware
 
 from time import sleep
@@ -35,15 +37,16 @@ def main():
         reducer = RootReducer(middlewares=middlewares)
         q = Queue()
 
-#        ts = TweetSource(q, out_q, tweetFetcher)
+        ts = TweetSource(q, out_q, tweetFetcher)
 
-#        t = Thread(target=ts.run)
-#        t.daemon = True
-#        t.start()
+        t = Thread(target=ts.run)
+        t.daemon = True
+        t.start()
 
-        app = TwitterClient(q, reducer=reducer)
+        app = TwitterClient(out_q, reducer=reducer)
         app.run()
-    except Exception as e:
+
+    except (KeyboardInterrupt, Exception) as e:
         os.system('clear')
         traceback.print_exc()
     finally:

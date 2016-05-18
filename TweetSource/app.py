@@ -1,4 +1,7 @@
 from . import ActionHandler
+from queue import Empty
+import traceback
+import time
 
 def main(client_queue, tweetFetcher):
     getAllTweets(client_queue, tweetFetcher)
@@ -31,14 +34,17 @@ class TweetSource:
 
     def run(self):
         getAllTweets(self.out_q, self.tf)
-        while True:
-            action = None
-            try:
-                action = self.in_q.get()
-            except:
-                pass
+        try:
+            while True:
+                action = None
+                try:
+                    action = self.in_q.get(block = False)
+                except Empty as e:
+                    pass
 
-            if action:
-                res = self.ah.handleAction(action)
-                if res:
-                    self.out_q.put(res)
+                if action:
+                    res = self.ah.handleAction(action)
+                    if res:
+                        self.out_q.put(res)
+        except:
+            traceback.print_exc()
