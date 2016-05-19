@@ -2,28 +2,34 @@ from . import ActionHandler
 from queue import Empty
 import traceback
 import time
+import asyncio
 
 def main(client_queue, tweetFetcher):
     getAllTweets(client_queue, tweetFetcher)
 
+@asyncio.coroutine
 def getAllTweets(queue, tweetFetcher):
-    queue.put({
-        'name': 'NEW_TWEETS',
-        'list': 'tweets',
-        'tweets': tweetFetcher.getTweets()
-    })
-    queue.put({
-        'name': 'NEW_TWEETS',
-        'list': 'home_timeline',
-        'tweets': tweetFetcher.getHomeTimeline()
-    })
-    lists = tweetFetcher.getLists()
-    for _list in lists:
-        queue.put({
+    try:
+        yield from queue.put({
             'name': 'NEW_TWEETS',
-            'list': 'list.' + _list,
-            'tweets': tweetFetcher.getListTweets(_list)
+            'list': 'tweets',
+            'tweets': tweetFetcher.getTweets()
         })
+        yield from queue.put({
+            'name': 'NEW_TWEETS',
+            'list': 'home_timeline',
+            'tweets': tweetFetcher.getHomeTimeline()
+        })
+        lists = tweetFetcher.getLists()
+        for _list in lists:
+            yield from queue.put({
+                'name': 'NEW_TWEETS',
+                'list': 'list.' + _list,
+                'tweets': tweetFetcher.getListTweets(_list)
+            })
+    except:
+        pass
+    return
 
 class TweetSource:
     def __init__(self, in_q, out_q, tf):

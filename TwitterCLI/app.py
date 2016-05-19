@@ -4,6 +4,7 @@ from TwitterCLI.reducers import RootReducer
 from TwitterCLI.actions import KeyboardEventHandler
 from TwitterCLI.layout import AppLayout
 from blessed import Terminal
+import asyncio
 
 class TwitterClient:
 
@@ -20,6 +21,7 @@ class TwitterClient:
         self.reducer = reducer
         self.q = q
 
+    @asyncio.coroutine
     def run(self):
         try:
             self.terminal.enter_fullscreen()
@@ -61,7 +63,7 @@ class TwitterClient:
         else:
             action = None
             try:
-                action = self.q.get(block=False)
+                action = self.q.get_nowait()
             except:
                 pass
 

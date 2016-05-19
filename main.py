@@ -1,4 +1,4 @@
-
+import asyncio
 import traceback
 import os
 
@@ -6,6 +6,7 @@ from TwitterCLI.app import TwitterClient
 from TwitterCLI.reducers import RootReducer
 from TweetSource.app import TweetSource as TweetSource
 from TweetSource.app import main as ts_func
+from TweetSource.app import getAllTweets
 from TwitterCLI.middleware import TweetSourceMiddleware
 
 from time import sleep
@@ -32,19 +33,26 @@ def main():
         mongoSource = MongoTweetSource(db)
         tweetFetcher = TweetFetcher(tweetSource, mongoSource)
 
-        out_q = Queue()
-        middlewares = [ TweetSourceMiddleware(out_q) ]
+        # out_q = Queue()
+        middlewares = []
+        # middlewares = [ TweetSourceMiddleware(out_q) ]
         reducer = RootReducer(middlewares=middlewares)
-        q = Queue()
+        # q = Queue()
 
-        ts = TweetSource(q, out_q, tweetFetcher)
+        # ts = TweetSource(q, out_q, tweetFetcher)
+        # ts.run()
+        # ts_func(out_q, tweetFetcher)
 
-        t = Thread(target=ts.run)
-        t.daemon = True
-        t.start()
 
+        # t = Thread(target=ts.run)
+        # t.daemon = True
+        # t.start()
+
+        out_q = asyncio.Queue()
+        loop = asyncio.get_event_loop()
+        asyncio.async(getAllTweets(out_q, tweetFetcher))
         app = TwitterClient(out_q, reducer=reducer)
-        app.run()
+        loop.run_until_complete(app.run())
 
     except (KeyboardInterrupt, Exception) as e:
         os.system('clear')

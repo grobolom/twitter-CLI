@@ -1,4 +1,5 @@
 import copy
+import asyncio
 
 class RootReducer:
     def __init__(self, middlewares=None):
@@ -25,7 +26,7 @@ class RootReducer:
     def _callMiddlewares(self, state, action):
         ns = state
         for middleware in self.middlewares:
-            ns = middleware.handleAction(ns, action)
+            asyncio.async(middleware.handleAction(ns, action))
         return ns
 
     def _switchView(self, state, action):
