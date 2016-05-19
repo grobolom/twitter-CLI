@@ -1,46 +1,38 @@
 import asyncio
 import time
-
 from blessed import Terminal
 
 def inputter():
     term = Terminal()
     with term.cbreak():
         key = term.inkey(1)
-        return key
+        if key and not key.is_sequence:
+            return key
+        return None
 
 @asyncio.coroutine
-def reader(some_queue):
+def reader(queue):
     while True:
         loop = asyncio.get_event_loop()
         future = loop.run_in_executor(None, inputter)
-        x = yield from future
-        if x and not x.is_sequence:
-            yield from some_queue.put(x)
+        key = yield from future
+        if key:
+            yield from queue.put(key)
 
 @asyncio.coroutine
-def something_slow(some_queue):
-    yield from asyncio.sleep(10)
-    yield from some_queue.put('WHAT')
-
-@asyncio.coroutine
-def terminal_process(some_queue):
-    asyncio.async(reader(some_queue))
-    asyncio.async(something_slow(some_queue))
+def our_process(queue):
     while True:
-        x = yield from some_queue.get()
+        x = yield from queue.get()
         print(x)
 
 def main():
     loop = asyncio.get_event_loop()
-    some_queue = asyncio.Queue()
-
+    queue = asyncio.Queue()
+    asyncio.async(reader(queue))
     try:
-        loop.run_until_complete(terminal_process(some_queue))
+        loop.run_until_complete(our_process(queue))
     finally:
         loop.close()
-        x = some_queue.get()
-    pass
 
 if __name__ == "__main__":
     main()
