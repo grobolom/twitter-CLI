@@ -38,19 +38,20 @@ class TweetSource:
         self.tf = tf
         self.ah = ActionHandler(tf)
 
+    @asyncio.coroutine
     def run(self):
-        getAllTweets(self.out_q, self.tf)
+        yield from getAllTweets(self.out_q, self.tf)
         try:
             while True:
                 action = None
                 try:
-                    action = self.in_q.get(block = False)
+                    action = yield from self.in_q.get()
                 except Empty as e:
                     pass
 
                 if action:
                     res = self.ah.handleAction(action)
                     if res:
-                        self.out_q.put(res)
+                        yield from self.out_q.put(res)
         except:
             traceback.print_exc()

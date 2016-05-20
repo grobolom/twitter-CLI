@@ -33,25 +33,17 @@ def main():
         mongoSource = MongoTweetSource(db)
         tweetFetcher = TweetFetcher(tweetSource, mongoSource)
 
-        # out_q = Queue()
+        TweetSourceInbox = asyncio.Queue()
+        TwitterCLIInbox = asyncio.Queue()
         middlewares = []
-        # middlewares = [ TweetSourceMiddleware(out_q) ]
+        middlewares = [ TweetSourceMiddleware(TweetSourceInbox) ]
         reducer = RootReducer(middlewares=middlewares)
-        # q = Queue()
 
-        # ts = TweetSource(q, out_q, tweetFetcher)
-        # ts.run()
-        # ts_func(out_q, tweetFetcher)
+        ts = TweetSource(TweetSourceInbox, TwitterCLIInbox, tweetFetcher)
 
-
-        # t = Thread(target=ts.run)
-        # t.daemon = True
-        # t.start()
-
-        out_q = asyncio.Queue()
         loop = asyncio.get_event_loop()
-        asyncio.async(getAllTweets(out_q, tweetFetcher))
-        app = TwitterClient(out_q, reducer=reducer)
+        asyncio.async(ts.run())
+        app = TwitterClient(TwitterCLIInbox, reducer=reducer)
         loop.run_until_complete(app.run())
 
     except (KeyboardInterrupt, Exception) as e:
