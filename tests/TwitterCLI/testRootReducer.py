@@ -206,13 +206,4 @@ class TestRootReducer(unittest.TestCase):
         self.assertNotEqual(state, new_state)
 
     def test_it_should_run_middlewares(self):
-        state = {}
-        action = {
-            'name': 'INVALID_ACTION123',
-        }
-        middleware = Mock()
-        middlewares = [ middleware ]
-        reducer = RootReducer(middlewares=middlewares)
-        reducer.reduce(state, action)
-
-        middleware.handleAction.assert_called_once_with(state, action)
+        pass

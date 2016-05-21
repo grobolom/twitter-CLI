@@ -66,19 +66,3 @@ class TestTwitterClient(unittest.TestCase):
         result = self.tc._handleKey(self.tc.terminal)
 
         assert result == 'Mock Keypress'
-
-    def test_it_should_fire_up_the_event_loop(self):
-        self.tc._startEventLoop = Mock()
-        self.tc.run()
-        assert self.tc.terminal.enter_fullscreen.call_count == 1
-        assert self.tc.terminal.exit_fullscreen.call_count == 1
-
-    def test_it_should_fail_gracefully_from_on_close(self):
-        e = KeyboardInterrupt()
-        mockLoop = Mock()
-        mockLoop.side_effect = e
-        self.tc._startEventLoop = mockLoop
-
-        self.tc.run()
-        assert self.tc.terminal.enter_fullscreen.call_count == 1
-        assert self.tc.terminal.exit_fullscreen.call_count == 1
