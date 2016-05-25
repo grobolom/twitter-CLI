@@ -164,7 +164,7 @@ class TestRootReducer(unittest.TestCase):
             }
         })
 
-    def test_it_should_append_new_tweets(self):
+    def test_new_tweets_should_be_placed_in_front_of_old_tweets(self):
         state = {
             'lists': {
                 'friends': {
@@ -182,8 +182,8 @@ class TestRootReducer(unittest.TestCase):
             'lists': {
                 'friends': {
                     'tweets': [
-                        { 'text' : 'first_tweet' },
                         { 'text' : 'second_tweet' },
+                        { 'text' : 'first_tweet' },
                     ]
                 }
             }

@@ -83,7 +83,9 @@ class RootReducer:
                 'cursor_max': len(tweets)
             }
 
-        state['lists'][ list_name ]['tweets'] += tweets
+        current_tweets = state['lists'][ list_name ]['tweets']
+        state['lists'][ list_name ]['tweets'] = \
+            tweets + current_tweets
 
         return state
 
