@@ -8,4 +8,5 @@ pymongo
 pytest
 pytest-watch
 pytest-cov
+pytest-asyncio
 coverage
