@@ -5,15 +5,15 @@ import TwitterCLI.colors as colors
 
 class Timeline:
     def render(self, tweets, cursor, width, height):
-        lines = []
-        for tweet in tweets:
-            lines += self._renderTweet(tweet, width)
-
         _cursor = cursor
         if _cursor < 0:
             _cursor = 0
 
-        tweet_lines = lines[_cursor:height + _cursor]
+        lines = []
+        for tweet in tweets[_cursor:_cursor + height]:
+            lines += self._renderTweet(tweet, width)
+
+        tweet_lines = lines[0:height]
 
         difference = height - len(tweet_lines)
         if difference > 0:

@@ -61,6 +61,18 @@ class TestTimelineView(unittest.TestCase):
             colors.color('           blob', colors.USER) + ' haha',
         ])
 
+    def test_it_should_move_the_cursor_by_tweets(self):
+        view = Timeline()
+        tweets = [
+            Tweet('grob', 'bla bla'),
+            Tweet('blob', 'haha')
+        ]
+        actual = view.render(tweets=tweets, cursor=1, width=20, height=1)
+        self.assertEqual(actual, [
+            colors.color('           blob', colors.USER) + ' haha',
+        ])
+
+
     def test_it_should_treat_negative_cursor_positions_as_zero(self):
         view = Timeline()
         tweets = [
