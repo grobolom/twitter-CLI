@@ -2,18 +2,18 @@ import unittest
 import jsonpickle
 import io
 
-from TwitterCLI.utils import Store
+from TwitterCLI.utils import StoreSaver
 
 class TestStore(unittest.TestCase):
     def test_it_should_save_state(self):
-        store = Store()
+        store = StoreSaver()
         state = {
             'bacon': 'bacon',
             'bits': 'bits',
             'boats': 'boats',
         }
         stream = io.StringIO()
-        store._saveStore(state, stream)
+        store.saveStore(state, stream)
         data = stream.getvalue()
 
         self.assertEqual(
@@ -22,7 +22,7 @@ class TestStore(unittest.TestCase):
         )
 
     def test_it_should_load_state(self):
-        store = Store()
+        store = StoreSaver()
         state = {
             'bacon': 'bacon',
             'bits': 'bits',
@@ -32,7 +32,7 @@ class TestStore(unittest.TestCase):
         stream.write(jsonpickle.encode(state))
         stream.seek(0)
 
-        data = store._loadStore(stream)
+        data = store.loadStore(stream)
         self.assertEqual(
             state,
             data
