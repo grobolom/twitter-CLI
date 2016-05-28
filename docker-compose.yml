@@ -19,4 +19,4 @@ db:
 mongo_data:
     image: mongo:3.0
     volumes:
-        - /data/db
+        - /data/db-cli
