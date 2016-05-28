@@ -13,7 +13,7 @@ class TestStore(unittest.TestCase):
             'boats': 'boats',
         }
         stream = io.StringIO()
-        store.saveStore(state, stream)
+        store._saveStore(state, stream)
         data = stream.getvalue()
 
         self.assertEqual(
@@ -32,7 +32,7 @@ class TestStore(unittest.TestCase):
         stream.write(jsonpickle.encode(state))
         stream.seek(0)
 
-        data = store.loadStore(stream)
+        data = store._loadStore(stream)
         self.assertEqual(
             state,
             data
