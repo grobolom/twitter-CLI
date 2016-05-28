@@ -17,3 +17,10 @@ class TestStore(unittest.TestCase):
         s = Store(reducers, { 'something': 'else' })
         s.dispatch({})
         assert s.getState() == []
+
+    def test_it_should_not_shallow_copy_state(self):
+        reducers = [ MockReducer() ]
+        state = { 'something': ['deeper'] }
+        s = Store(reducers, state)
+        s.dispatch({})
+        assert s.getState() != state
