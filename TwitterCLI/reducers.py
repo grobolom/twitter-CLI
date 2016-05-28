@@ -103,3 +103,16 @@ class RootReducer:
             if key not in other_lists and key not in order:
                 other_lists += [ key ]
         return order + sorted(other_lists)
+
+class TerminalReducer:
+    """
+    maybe this should be a middleware? anyway, we need to get the terminal
+    size somehow
+    """
+    def __init__(self, terminal):
+        self.terminal = terminal
+
+    def reduce(self, state, action):
+        state['screen_width'] = self.terminal.width
+        state['screen_height'] = self.terminal.height
+        return state

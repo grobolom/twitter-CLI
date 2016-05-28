@@ -4,6 +4,8 @@ import os
 
 from TwitterCLI.app import TwitterClient
 from TwitterCLI.reducers import RootReducer
+from TwitterCLI.reducers import TerminalReducer
+from TwitterCLI.utils import Store
 from TweetSource.app import TweetSource as TweetSource
 from TweetSource.app import main as ts_func
 from TweetSource.app import getAllTweets
@@ -21,6 +23,8 @@ from TweetSource import TwitterWrapper
 
 import pymongo
 
+from blessed import Terminal
+
 def main():
     mongo = pymongo.MongoClient('localhost', 27017)
     try:
@@ -37,13 +41,26 @@ def main():
         TwitterCLIInbox = asyncio.Queue()
         middlewares = []
         middlewares = [ TweetSourceMiddleware(TweetSourceInbox) ]
-        reducer = RootReducer(middlewares=middlewares)
+        reducers = [
+            RootReducer(middlewares=middlewares),
+            TerminalReducer(Terminal()),
+        ]
 
         ts = TweetSource(TweetSourceInbox, TwitterCLIInbox, tweetFetcher)
 
+        initialState = {
+            'cursor': 0,
+            'cursor_max': 200,
+            'username': 'grobolom',
+            'selected_list': 'home_timeline',
+            'lists': {},
+            'view': 'default',
+        }
+        store = Store(reducers, initialState)
+
         loop = asyncio.get_event_loop()
         asyncio.async(ts.run())
-        app = TwitterClient(TwitterCLIInbox, reducer=reducer)
+        app = TwitterClient(TwitterCLIInbox, store=store)
         loop.run_until_complete(app.run())
 
     except (KeyboardInterrupt, Exception) as e:
