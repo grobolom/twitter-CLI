@@ -15,7 +15,7 @@ class ActionLogger:
         for key, value in obj.items():
             if type(value) == list:
                 output[key] = 'list of length ' + str(len(value))
-            elif type(value) == list:
+            elif type(value) == tuple:
                 output[key] = 'tuple of size ' + str(len(value))
             elif type(value) == dict:
                 output[key] = 'dict with ' + str(len(value)) + ' elements'
