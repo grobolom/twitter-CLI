@@ -23,15 +23,15 @@ class TwitterClient:
 
     @asyncio.coroutine
     def run(self):
+        self.terminal.enter_fullscreen()
         try:
-            self.terminal.enter_fullscreen()
             self._startEventLoop()
-            self.terminal.exit_fullscreen()
         except KeyboardInterrupt:
+            pass
+        finally:
             self.terminal.exit_fullscreen()
             print(self.terminal.clear)
             print('seeya!')
-        return
 
     def _startEventLoop(self):
         while True:

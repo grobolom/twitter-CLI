@@ -27,47 +27,52 @@ from blessed import Terminal
 
 def main():
     mongo = pymongo.MongoClient('localhost', 27017)
+    db = mongo['twitter-cli']
+
+    with open('config/twitter.json') as twitter_config:
+        config = json.load(twitter_config)
+    twitter = getTwitter(config)
+    tweetSource = TwitterWrapper(config, twitter)
+    mongoSource = MongoTweetSource(db)
+    tweetFetcher = TweetFetcher(tweetSource, mongoSource)
+
+    TweetSourceInbox = asyncio.Queue()
+    TwitterCLIInbox = asyncio.Queue()
+    middlewares = []
+    middlewares = [ TweetSourceMiddleware(TweetSourceInbox) ]
+    reducers = [
+        RootReducer(middlewares=middlewares),
+        TerminalReducer(Terminal()),
+    ]
+
+    ts = TweetSource(TweetSourceInbox, TwitterCLIInbox, tweetFetcher)
+
+    initialState = {
+        'cursor': 0,
+        'cursor_max': 200,
+        'username': 'grobolom',
+        'selected_list': 'home_timeline',
+        'lists': {},
+        'view': 'splash',
+    }
+    store = Store(reducers, initialState)
+    app = TwitterClient(TwitterCLIInbox, store=store)
+
+    loop = asyncio.get_event_loop()
     try:
-        db = mongo['twitter-cli']
-
-        with open('config/twitter.json') as twitter_config:
-            config = json.load(twitter_config)
-        twitter = getTwitter(config)
-        tweetSource = TwitterWrapper(config, twitter)
-        mongoSource = MongoTweetSource(db)
-        tweetFetcher = TweetFetcher(tweetSource, mongoSource)
-
-        TweetSourceInbox = asyncio.Queue()
-        TwitterCLIInbox = asyncio.Queue()
-        middlewares = []
-        middlewares = [ TweetSourceMiddleware(TweetSourceInbox) ]
-        reducers = [
-            RootReducer(middlewares=middlewares),
-            TerminalReducer(Terminal()),
-        ]
-
-        ts = TweetSource(TweetSourceInbox, TwitterCLIInbox, tweetFetcher)
-
-        initialState = {
-            'cursor': 0,
-            'cursor_max': 200,
-            'username': 'grobolom',
-            'selected_list': 'home_timeline',
-            'lists': {},
-            'view': 'splash',
-        }
-        store = Store(reducers, initialState)
-
-        loop = asyncio.get_event_loop()
         asyncio.async(ts.run())
-        app = TwitterClient(TwitterCLIInbox, store=store)
         loop.run_until_complete(app.run())
 
-    except (KeyboardInterrupt, Exception) as e:
-        os.system('clear')
-        traceback.print_exc()
-    finally:
-        mongo.close()
-    return
+        pending = asyncio.Task.all_tasks()
+        for task in pending:
+            task.cancel()
+        try:
+            loop.run_until_complete(asyncio.sleep(0.01))
+        except:
+            pass
+    except Exception as e:
+        pass
+
+    mongo.close()
 if __name__ == "__main__":
     main()

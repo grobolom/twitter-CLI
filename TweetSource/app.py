@@ -47,8 +47,8 @@ class TweetSource:
                 action = None
                 try:
                     action = yield from self.in_q.get()
-                except Empty as e:
-                    pass
+                except (asyncio.CancelledError) as e:
+                    return
 
                 if action:
                     res = self.ah.handleAction(action)
