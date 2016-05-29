@@ -27,6 +27,7 @@ def getAllTweets(queue, tweetFetcher):
                 'list': 'list.' + _list,
                 'tweets': tweetFetcher.getListTweets(_list)
             })
+        yield from queue.put({ 'name': 'DONE_LOADING_TWEETS' });
     except:
         pass
     return
