@@ -20,6 +20,8 @@ class RootReducer:
             return self._switchView(s, action)
         elif name == 'NEW_TWEETS':
             return self._addTweets(s, action)
+        elif name == 'DONE_LOADING_TWEETS':
+            return self._finishLoadingTweets(s, action)
 
         return s
 
@@ -28,6 +30,11 @@ class RootReducer:
         for middleware in self.middlewares:
             asyncio.async(middleware.handleAction(ns, action))
         return ns
+
+    def _finishLoadingTweets(self, state, action):
+        if state['view'] == 'splash':
+            state['view'] = 'default'
+        return state;
 
     def _switchView(self, state, action):
         state['view'] = action['target']

@@ -205,5 +205,9 @@ class TestRootReducer(unittest.TestCase):
         new_state = self.rootReducer.reduce(state, action)
         self.assertNotEqual(state, new_state)
 
-    def test_it_should_run_middlewares(self):
-        pass
+    def test_it_should_switch_to_tweet_view_on_loaded_tweets(self):
+        state = { 'view': 'splash' }
+        action = { 'name': 'DONE_LOADING_TWEETS' }
+        new_state = self.rootReducer.reduce(state, action)
+        assert new_state['view'] == 'default'
+
