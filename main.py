@@ -10,6 +10,7 @@ from TweetSource.app import TweetSource as TweetSource
 from TweetSource.app import main as ts_func
 from TweetSource.app import getAllTweets
 from TwitterCLI.middleware import TweetSourceMiddleware
+from TwitterCLI.middleware import ActionLogger
 
 from time import sleep
 from threading import Thread
@@ -38,8 +39,10 @@ def main():
 
     TweetSourceInbox = asyncio.Queue()
     TwitterCLIInbox = asyncio.Queue()
-    middlewares = []
-    middlewares = [ TweetSourceMiddleware(TweetSourceInbox) ]
+    middlewares = [
+        TweetSourceMiddleware(TweetSourceInbox),
+        ActionLogger('logs/actions.log'),
+    ]
     reducers = [
         RootReducer(middlewares=middlewares),
         TerminalReducer(Terminal()),
