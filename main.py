@@ -54,7 +54,7 @@ def main():
             'username': 'grobolom',
             'selected_list': 'home_timeline',
             'lists': {},
-            'view': 'default',
+            'view': 'splash',
         }
         store = Store(reducers, initialState)
 
